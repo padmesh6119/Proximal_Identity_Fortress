@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NFC//VAULT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -24,8 +24,8 @@
   --border2:rgba(0,229,255,.22);
   --text:#b8d4dc;
   --text2:rgba(184,212,220,.45);
-  --mono:'Share Tech Mono',monospace;
-  --orb:'Orbitron',sans-serif;
+  --mono:'Space Mono',monospace;
+  --orb:'Syncopate',sans-serif;
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--mono);overflow:hidden;cursor:crosshair}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
@@ -45,8 +45,8 @@ background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0
 .tb-left{display:flex;align-items:center;gap:16px}
 .tb-logo{font-family:var(--orb);font-size:11px;font-weight:700;color:var(--g);letter-spacing:.2em}
 .tb-sep{width:1px;height:14px;background:var(--border2)}
-.tb-tag{font-size:9px;color:var(--text2);letter-spacing:.15em}
-.tb-right{display:flex;align-items:center;gap:20px;font-size:9px;color:var(--text2);letter-spacing:.1em}
+.tb-tag{font-size:12px;color:var(--text2);letter-spacing:.15em}
+.tb-right{display:flex;align-items:center;gap:20px;font-size:12px;color:var(--text2);letter-spacing:.1em}
 #tb-time{color:var(--text);font-size:10px}
 .pulse{width:5px;height:5px;border-radius:50%;background:var(--g);animation:blink 2s ease-in-out infinite}
 .pulse.off{background:var(--r)}
@@ -91,7 +91,7 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
 .wave:nth-child(2){width:10px;height:10px;animation-delay:.18s}
 .wave:nth-child(3){width:14px;height:14px;animation-delay:.36s}
 @keyframes wave-out{0%,100%{opacity:.25}50%{opacity:.9}}
-.lock-label{font-family:var(--orb);font-size:9px;font-weight:400;letter-spacing:.3em;color:var(--text2);text-align:center;line-height:2;margin-top:24px}
+.lock-label{font-family:var(--orb);font-size:12px;font-weight:400;letter-spacing:.3em;color:var(--text2);text-align:center;line-height:2;margin-top:24px}
 #lock-msg{font-size:10px;letter-spacing:.2em;min-height:16px;text-align:center;margin-top:8px;transition:color .3s}
 #lock-msg.ok{color:var(--g)}
 #lock-msg.fail{color:var(--r);animation:shake .3s}
@@ -116,18 +116,18 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
 .stat-row{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--border);background:rgba(6,10,13,.85);backdrop-filter:blur(8px)}
 .stat{padding:12px 16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--border);position:relative;overflow:hidden}
 .stat:last-child{border-right:none}
-.stat-l{font-size:7px;letter-spacing:.3em;color:var(--text2);text-transform:uppercase}
+.stat-l{font-size:10px;letter-spacing:.3em;color:var(--text2);text-transform:uppercase}
 .stat-v{font-family:var(--orb);font-size:18px;font-weight:700;line-height:1.1;color:var(--text)}
 .stat-v.g{color:var(--g)}
 .stat-v.r{color:var(--r)}
 .stat-v.a{color:var(--amber)}
-.stat-u{font-size:8px;color:var(--text2)}
+.stat-u{font-size:11px;color:var(--text2)}
 
 /* MAIN LAYOUT: 3 column */
 .main-grid{display:grid;grid-template-columns:1fr 420px 280px;flex:1;min-height:0;overflow:hidden}
 .panel{display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden;background:rgba(6,10,13,.7);backdrop-filter:blur(6px)}
 .panel:last-child{border-right:none}
-.panel-head{padding:10px 16px;border-bottom:1px solid var(--border);font-size:7px;letter-spacing:.3em;color:var(--text2);text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;background:rgba(6,10,13,.5)}
+.panel-head{padding:10px 16px;border-bottom:1px solid var(--border);font-size:10px;letter-spacing:.3em;color:var(--text2);text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;background:rgba(6,10,13,.5)}
 .panel-body{flex:1;overflow-y:auto;overflow-x:hidden}
 .panel-body::-webkit-scrollbar{width:2px}
 .panel-body::-webkit-scrollbar-thumb{background:var(--border2)}
@@ -136,7 +136,7 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
 #globe-panel{position:relative}
 #globe-canvas{width:100%;height:100%;display:block}
 .globe-overlay{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none}
-.ping-label{position:absolute;font-size:8px;color:var(--g);letter-spacing:.1em;transform:translate(-50%,-200%);white-space:nowrap;animation:ping-fade 3s forwards}
+.ping-label{position:absolute;font-size:11px;color:var(--g);letter-spacing:.1em;transform:translate(-50%,-200%);white-space:nowrap;animation:ping-fade 3s forwards}
 @keyframes ping-fade{0%{opacity:1;transform:translate(-50%,-200%) scale(1)}100%{opacity:0;transform:translate(-50%,-280%) scale(.8)}}
 
 /* ==================== RIGHT COLUMN ==================== */
@@ -145,12 +145,12 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
 /* BIOMETRIC GHOST */
 #ghost-panel{position:relative;overflow:hidden}
 #ghost-canvas{position:absolute;inset:0;width:100%;height:100%}
-.ghost-label{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:7px;letter-spacing:.25em;color:var(--text2)}
+.ghost-label{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.25em;color:var(--text2)}
 
 /* CARD DNA */
 #dna-panel{}
 #dna-canvas{width:100%;display:block}
-.dna-hash{font-size:8px;color:var(--text2);padding:4px 12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.05em}
+.dna-hash{font-size:11px;color:var(--text2);padding:4px 12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.05em}
 
 /* TTL RING */
 #ttl-panel{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px}
@@ -158,17 +158,17 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
 #ttl-svg{width:100%;height:100%}
 .ttl-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
 #ttl-num{font-family:var(--orb);font-size:22px;font-weight:700;color:var(--g);line-height:1}
-#ttl-unit{font-size:7px;color:var(--text2);letter-spacing:.2em}
+#ttl-unit{font-size:10px;color:var(--text2);letter-spacing:.2em}
 .rad-warning{color:var(--amber)!important}
 .rad-danger{color:var(--r)!important;animation:rad-blink .6s step-end infinite}
 @keyframes rad-blink{0%,100%{opacity:1}50%{opacity:.3}}
-#ttl-bar-label{font-size:7px;color:var(--text2);letter-spacing:.15em;text-align:center}
+#ttl-bar-label{font-size:10px;color:var(--text2);letter-spacing:.15em;text-align:center}
 
 /* BOTTOM STRIP: Log + Terminal */
 .bottom-strip{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);background:rgba(6,10,13,.85);max-height:200px}
 
 /* AUTH LOG */
-.log-item{display:grid;grid-template-columns:5px 70px 1fr auto;align-items:center;gap:8px;padding:7px 14px;border-bottom:1px solid rgba(0,229,255,.05);font-size:9px;animation:fadein .3s ease}
+.log-item{display:grid;grid-template-columns:5px 70px 1fr auto;align-items:center;gap:8px;padding:7px 14px;border-bottom:1px solid rgba(0,229,255,.05);font-size:12px;animation:fadein .3s ease}
 @keyframes fadein{from{opacity:0;transform:translateY(-2px)}to{opacity:1;transform:none}}
 .log-dot{width:4px;height:4px;border-radius:50%}
 .log-dot.ok{background:var(--g)}
@@ -176,23 +176,23 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
 .log-dot.enroll{background:var(--amber)}
 .log-time{color:var(--text2)}
 .log-ev{color:var(--text)}
-.log-meta{color:var(--text2);font-size:8px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px}
+.log-meta{color:var(--text2);font-size:11px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px}
 
 /* TERMINAL */
 .term-body{flex:1;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:0;height:100%}
 .term-body::-webkit-scrollbar{width:2px}
 .term-body::-webkit-scrollbar-thumb{background:var(--border2)}
-.tl{font-size:9px;line-height:1.9;display:block}
+.tl{font-size:12px;line-height:1.9;display:block}
 .t-p{color:var(--g)}
 .t-ok{color:rgba(0,229,255,.7)}
 .t-fail{color:rgba(255,45,85,.8)}
 .t-dim{color:var(--text2)}
 .t-enroll{color:rgba(255,183,0,.8)}
-.t-hex{color:rgba(0,229,255,.4);font-size:8px}
+.t-hex{color:rgba(0,229,255,.4);font-size:11px}
 .cur{animation:blink 1s step-end infinite}
 
 /* LOCK BTN */
-.lock-btn{font-family:var(--mono);font-size:8px;letter-spacing:.15em;padding:4px 10px;background:transparent;border:1px solid rgba(255,45,85,.3);color:rgba(255,45,85,.6);border-radius:2px;cursor:pointer;text-transform:uppercase;transition:all .2s}
+.lock-btn{font-family:var(--mono);font-size:11px;letter-spacing:.15em;padding:4px 10px;background:transparent;border:1px solid rgba(255,45,85,.3);color:rgba(255,45,85,.6);border-radius:2px;cursor:pointer;text-transform:uppercase;transition:all .2s}
 .lock-btn:hover{border-color:var(--r);color:var(--r);background:var(--r2)}
 </style>
 </head>
@@ -288,7 +288,7 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
       <div class="panel" id="globe-panel" style="position:relative">
         <div class="panel-head">
           <span>Global NFC Event Map</span>
-          <span id="ping-count" style="color:var(--g);font-size:7px">0 PINGS</span>
+          <span id="ping-count" style="color:var(--g);font-size:10px">0 PINGS</span>
         </div>
         <div style="flex:1;position:relative">
           <canvas id="globe-canvas"></canvas>
@@ -300,7 +300,7 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
       <div class="panel">
         <div class="panel-head">
           <span>Auth Event Log</span>
-          <span id="ok-count" style="color:var(--g);font-size:7px"></span>
+          <span id="ok-count" style="color:var(--g);font-size:10px"></span>
         </div>
         <div class="panel-body" id="log-list"></div>
 
@@ -308,7 +308,7 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
         <div style="border-top:1px solid var(--border)">
           <div class="panel-head" style="border-bottom:none;margin-bottom:0">
             <span>Card DNA · SHA256 Barcode</span>
-            <span id="dna-uid" style="font-size:7px;color:var(--amber)">NO CARD</span>
+            <span id="dna-uid" style="font-size:10px;color:var(--amber)">NO CARD</span>
           </div>
           <canvas id="dna-canvas" height="36"></canvas>
           <div class="dna-hash" id="dna-hash-txt">awaiting card tap...</div>
@@ -319,7 +319,7 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
           <div class="panel-head" style="border-bottom:none">
             <span>NFC Byte Stream · Live Hexdump</span>
           </div>
-          <div id="hexdump" style="padding:6px 12px;font-size:8px;color:rgba(0,229,255,.45);line-height:1.8;font-family:var(--mono);letter-spacing:.08em;max-height:60px;overflow:hidden">
+          <div id="hexdump" style="padding:6px 12px;font-size:11px;color:rgba(0,229,255,.45);line-height:1.8;font-family:var(--mono);letter-spacing:.08em;max-height:60px;overflow:hidden">
             00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
           </div>
         </div>
@@ -367,17 +367,17 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
               <div id="ttl-unit">SECONDS</div>
             </div>
           </div>
-          <div id="ttl-bar-label" style="font-size:7px;color:var(--text2);letter-spacing:.15em">SESSION ACTIVE</div>
+          <div id="ttl-bar-label" style="font-size:10px;color:var(--text2);letter-spacing:.15em">SESSION ACTIVE</div>
           <!-- Entropy meter -->
           <div style="align-self:stretch;margin-top:4px;padding:0 8px">
-            <div style="font-size:7px;letter-spacing:.2em;color:var(--text2);margin-bottom:4px">CARD ENTROPY</div>
+            <div style="font-size:10px;letter-spacing:.2em;color:var(--text2);margin-bottom:4px">CARD ENTROPY</div>
             <div style="height:4px;background:rgba(0,229,255,.08);border-radius:2px;overflow:hidden">
               <div id="entropy-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--g),var(--amber));border-radius:2px;transition:width .6s ease"></div>
             </div>
             <div style="display:flex;justify-content:space-between;margin-top:3px">
-              <span style="font-size:7px;color:var(--text2)">LOW</span>
-              <span id="entropy-val" style="font-size:7px;color:var(--amber)">—</span>
-              <span style="font-size:7px;color:var(--text2)">HIGH</span>
+              <span style="font-size:10px;color:var(--text2)">LOW</span>
+              <span id="entropy-val" style="font-size:10px;color:var(--amber)">—</span>
+              <span style="font-size:10px;color:var(--text2)">HIGH</span>
             </div>
           </div>
         </div>
@@ -388,8 +388,8 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
           <div style="flex:1;position:relative;padding:8px 12px">
             <canvas id="snr-canvas" style="width:100%;display:block"></canvas>
             <div style="display:flex;justify-content:space-between;margin-top:4px">
-              <span style="font-size:7px;color:var(--text2)">FREQ: 13.56 MHz</span>
-              <span id="snr-val" style="font-size:7px;color:var(--g)">SNR: — dB</span>
+              <span style="font-size:10px;color:var(--text2)">FREQ: 13.56 MHz</span>
+              <span id="snr-val" style="font-size:10px;color:var(--g)">SNR: — dB</span>
             </div>
           </div>
         </div>
@@ -502,14 +502,15 @@ function buildGlobe() {
   globeCX = globeW / 2
   globeCY = globeH / 2
   globeDots = []
-  // Fibonacci sphere distribution
-  const N = 600
+  // Fibonacci sphere distribution — tag land vs ocean
+  const N = 900
   for (let i = 0; i < N; i++) {
     const phi = Math.acos(1 - 2 * (i + .5) / N)
     const theta = Math.PI * (1 + Math.sqrt(5)) * i
     const lat = Math.PI/2 - phi
     const lon = theta
-    globeDots.push({ lat, lon })
+    const land = isLand(lat, lon)
+    globeDots.push({ lat, lon, land })
   }
 }
 
@@ -579,73 +580,187 @@ function addGlobePing(cityIdx) {
   }
 }
 
+// ── Earth land polygons: simplified lat/lon outlines ─────────────────
+// Each entry is an array of [lon,lat] in degrees, closed polygon
+const LAND_POLYS = [
+  // North America
+  [[-168,71],[-140,70],[-130,55],[-125,49],[-115,32],[-117,32],[-105,19],[-87,16],[-83,10],[-77,8],[-76,9],[-82,10],[-85,10],[-88,16],[-90,18],[-94,16],[-97,19],[-105,20],[-109,23],[-108,27],[-114,32],[-120,34],[-124,37],[-124,49],[-130,54],[-140,58],[-155,59],[-162,60],[-168,66],[-168,71]],
+  // Greenland
+  [[-70,76],[-52,83],[-28,83],[-18,76],[-24,65],[-44,59],[-58,62],[-68,70],[-70,76]],
+  // South America
+  [[-78,0],[-76,2],[-69,1],[-50,0],[-35,-5],[-35,-10],[-38,-13],[-43,-23],[-52,-33],[-60,-38],[-68,-55],[-73,-50],[-76,-43],[-74,-33],[-76,-15],[-80,-3],[-78,0]],
+  // Europe
+  [[10,55],[5,48],[0,44],[-5,44],[-10,37],[0,36],[12,37],[15,40],[18,40],[20,38],[26,38],[28,41],[30,43],[28,45],[18,44],[15,45],[13,46],[10,47],[6,46],[2,44],[0,44],[-2,44],[-5,44],[-8,42],[-10,37],[-8,36],[0,36],[5,44],[10,55]],
+  // Scandinavia
+  [[5,58],[7,58],[10,55],[12,56],[18,57],[24,60],[28,65],[30,70],[28,71],[22,70],[16,69],[14,66],[12,63],[5,58]],
+  // Africa
+  [[-17,15],[-15,12],[-15,5],[0,5],[10,5],[15,0],[25,-5],[35,-5],[40,-3],[42,10],[44,12],[43,15],[40,22],[33,28],[32,30],[34,32],[36,38],[42,42],[48,30],[44,22],[43,15],[36,12],[42,12],[48,8],[42,0],[38,-3],[34,-5],[28,-12],[33,-18],[35,-25],[28,-32],[20,-35],[16,-29],[12,-18],[8,-5],[2,5],[-5,5],[-10,4],[-15,6],[-17,12],[-17,15]],
+  // Asia (simplified)
+  [[30,43],[38,47],[45,42],[50,30],[55,22],[60,22],[62,20],[66,22],[68,20],[70,22],[75,20],[72,15],[78,8],[80,14],[86,20],[90,22],[95,20],[100,4],[104,1],[108,3],[110,4],[118,22],[120,30],[122,35],[126,38],[128,40],[130,42],[135,43],[140,44],[140,42],[136,35],[132,34],[128,30],[122,22],[116,22],[114,22],[110,18],[108,15],[104,10],[102,4],[98,2],[95,4],[92,8],[85,22],[80,20],[76,22],[70,22],[68,28],[60,30],[56,42],[55,50],[60,55],[68,55],[75,55],[82,55],[88,52],[95,52],[100,52],[106,52],[110,52],[116,52],[122,50],[126,48],[128,48],[132,48],[136,48],[142,48],[145,45],[140,42],[135,43],[130,42],[126,38],[122,35],[118,30],[118,22],[110,18],[104,10],[100,4],[96,2],[92,5],[85,22],[80,14],[76,8],[72,15],[70,22],[64,22],[60,22],[56,24],[50,30],[45,42],[38,47],[30,43]],
+  // Australia
+  [[114,-22],[114,-32],[120,-34],[126,-34],[130,-33],[136,-34],[140,-36],[148,-38],[150,-36],[152,-30],[150,-25],[146,-20],[140,-18],[136,-12],[132,-12],[128,-15],[122,-18],[114,-22]],
+  // Japan
+  [[130,31],[132,33],[134,34],[136,36],[138,38],[140,40],[141,42],[140,44],[136,44],[132,34],[130,32],[130,31]],
+  // UK
+  [[-5,50],[-3,50],[0,52],[1,54],[0,57],[-2,58],[-5,58],[-6,56],[-5,52],[-5,50]],
+  // Antarctica (partial)
+  [[-180,-72],[-120,-68],[-60,-72],[0,-70],[60,-68],[120,-68],[180,-72],[-180,-72]],
+  // Iceland
+  [[-24,63],[-14,63],[-13,65],[-20,66],[-24,65],[-24,63]],
+]
+
+function isLand(lat, lon) {
+  // Point-in-polygon for all land polys
+  const latD = lat * 180 / Math.PI
+  let lonD = lon * 180 / Math.PI
+  // normalize lon to -180..180
+  while (lonD > 180) lonD -= 360
+  while (lonD < -180) lonD += 360
+  for (const poly of LAND_POLYS) {
+    let inside = false
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const xi = poly[i][0], yi = poly[i][1]
+      const xj = poly[j][0], yj = poly[j][1]
+      if (((yi > latD) !== (yj > latD)) && (lonD < (xj - xi) * (latD - yi) / (yj - yi) + xi)) inside = !inside
+    }
+    if (inside) return true
+  }
+  return false
+}
+
 function drawGlobe() {
   if (!globeW) { buildGlobe(); }
   gCtx.clearRect(0, 0, globeW, globeH)
 
-  // Atmosphere glow
-  const atmos = gCtx.createRadialGradient(globeCX, globeCY, globeR * .85, globeCX, globeCY, globeR * 1.25)
-  atmos.addColorStop(0, 'rgba(0,229,255,.06)')
-  atmos.addColorStop(1, 'rgba(0,229,255,0)')
+  // Deep space behind globe
+  const space = gCtx.createRadialGradient(globeCX, globeCY, globeR * .7, globeCX, globeCY, globeR * 1.6)
+  space.addColorStop(0, 'rgba(10,30,50,.0)')
+  space.addColorStop(.6, 'rgba(5,15,30,.15)')
+  space.addColorStop(1, 'rgba(0,10,20,.35)')
   gCtx.beginPath()
-  gCtx.arc(globeCX, globeCY, globeR * 1.25, 0, Math.PI * 2)
-  gCtx.fillStyle = atmos
+  gCtx.arc(globeCX, globeCY, globeR * 1.6, 0, Math.PI * 2)
+  gCtx.fillStyle = space
   gCtx.fill()
 
-  // Globe base
-  const grad = gCtx.createRadialGradient(globeCX - globeR*.2, globeCY - globeR*.2, 0, globeCX, globeCY, globeR)
-  grad.addColorStop(0, 'rgba(11,17,23,.9)')
-  grad.addColorStop(1, 'rgba(6,10,13,.95)')
-  gCtx.beginPath()
-  gCtx.arc(globeCX, globeCY, globeR, 0, Math.PI * 2)
-  gCtx.fillStyle = grad
-  gCtx.fill()
-
-  // Graticule lines (lat/lon grid)
+  // Clip to globe sphere
   gCtx.save()
-  gCtx.strokeStyle = 'rgba(0,229,255,.06)'
-  gCtx.lineWidth = .5
-  // Latitude lines
-  for (let lat = -60; lat <= 60; lat += 30) {
-    const latR = lat * Math.PI / 180
-    gCtx.beginPath()
-    let first = true
-    for (let lon = 0; lon <= 360; lon += 5) {
-      const lonR = lon * Math.PI / 180
-      const {x,y,z} = latLonToXYZ(latR, lonR, globeAngle)
-      const {sx,sy,vis} = projectXYZ(x,y,z)
-      if (!vis) { first = true; continue }
-      if (first) { gCtx.moveTo(sx,sy); first=false } else gCtx.lineTo(sx,sy)
-    }
-    gCtx.stroke()
-  }
-  // Longitude lines
-  for (let lon = 0; lon < 180; lon += 30) {
-    const lonR = lon * Math.PI / 180
-    gCtx.beginPath()
-    let first = true
-    for (let lat = -90; lat <= 90; lat += 5) {
-      const latR = lat * Math.PI / 180
-      const {x,y,z} = latLonToXYZ(latR, lonR, globeAngle)
-      const {sx,sy,vis} = projectXYZ(x,y,z)
-      if (!vis) { first = true; continue }
-      if (first) { gCtx.moveTo(sx,sy); first=false } else gCtx.lineTo(sx,sy)
-    }
-    gCtx.stroke()
-  }
-  gCtx.restore()
+  gCtx.beginPath()
+  gCtx.arc(globeCX, globeCY, globeR - .5, 0, Math.PI * 2)
+  gCtx.clip()
 
-  // Dots
+  // Ocean base
+  const ocean = gCtx.createRadialGradient(globeCX - globeR*.25, globeCY - globeR*.25, 0, globeCX, globeCY, globeR)
+  ocean.addColorStop(0, '#0d2a3f')
+  ocean.addColorStop(.5, '#091e2e')
+  ocean.addColorStop(1, '#060f1a')
+  gCtx.fillStyle = ocean
+  gCtx.fillRect(globeCX - globeR, globeCY - globeR, globeR * 2, globeR * 2)
+
+  // Draw land & ocean dots
   globeDots.forEach(d => {
     const {x,y,z} = latLonToXYZ(d.lat, d.lon, globeAngle)
     const {sx,sy,vis} = projectXYZ(x,y,z)
     if (!vis) return
-    const alpha = .15 + z * .45
-    gCtx.beginPath()
-    gCtx.arc(sx, sy, .8, 0, Math.PI * 2)
-    gCtx.fillStyle = `rgba(0,229,255,${alpha})`
-    gCtx.fill()
+    const light = .4 + z * .6
+    if (d.land) {
+      // Land: green-brown tones
+      const lat = d.lat * 180 / Math.PI
+      let r, g, b
+      if (Math.abs(lat) > 65) { r=230;g=240;b=245 } // Ice caps - white
+      else if (Math.abs(lat) > 55) { r=100;g=130;b=90 } // Tundra
+      else if (Math.abs(lat) < 15) { r=40;g=100;b=50 } // Tropical jungle
+      else { r=70;g=110;b=60 } // Temperate
+      gCtx.beginPath()
+      gCtx.arc(sx, sy, 1.1, 0, Math.PI * 2)
+      gCtx.fillStyle = `rgba(${Math.round(r*light)},${Math.round(g*light)},${Math.round(b*light)},0.9)`
+      gCtx.fill()
+    } else {
+      // Ocean shimmer
+      const shimmer = z > .6 ? .25 : .08
+      gCtx.beginPath()
+      gCtx.arc(sx, sy, .6, 0, Math.PI * 2)
+      gCtx.fillStyle = `rgba(30,120,200,${shimmer * light})`
+      gCtx.fill()
+    }
   })
+
+  // Polar ice caps overlay
+  ;[{latMin:70,col:'rgba(220,235,255,'},{latMax:-70,col:'rgba(210,230,255,'}].forEach(cap => {
+    globeDots.forEach(d => {
+      const latD = d.lat * 180 / Math.PI
+      if (cap.latMin && latD < cap.latMin) return
+      if (cap.latMax && latD > cap.latMax) return
+      const {x,y,z} = latLonToXYZ(d.lat, d.lon, globeAngle)
+      const {sx,sy,vis} = projectXYZ(x,y,z)
+      if (!vis) return
+      gCtx.beginPath()
+      gCtx.arc(sx, sy, 1.2, 0, Math.PI * 2)
+      gCtx.fillStyle = cap.col + (z*.5+.3) + ')'
+      gCtx.fill()
+    })
+  })
+
+  gCtx.restore()
+
+  // Atmosphere halo (outside clip)
+  const atmos = gCtx.createRadialGradient(globeCX, globeCY, globeR * .92, globeCX, globeCY, globeR * 1.18)
+  atmos.addColorStop(0, 'rgba(60,160,255,.18)')
+  atmos.addColorStop(.4, 'rgba(30,100,200,.08)')
+  atmos.addColorStop(1, 'rgba(0,50,150,0)')
+  gCtx.beginPath()
+  gCtx.arc(globeCX, globeCY, globeR * 1.18, 0, Math.PI * 2)
+  gCtx.fillStyle = atmos
+  gCtx.fill()
+
+  // Specular highlight
+  const spec = gCtx.createRadialGradient(globeCX - globeR*.3, globeCY - globeR*.3, 0, globeCX - globeR*.1, globeCY - globeR*.1, globeR * .7)
+  spec.addColorStop(0, 'rgba(255,255,255,.08)')
+  spec.addColorStop(.3, 'rgba(255,255,255,.03)')
+  spec.addColorStop(1, 'rgba(255,255,255,0)')
+  gCtx.beginPath()
+  gCtx.arc(globeCX, globeCY, globeR, 0, Math.PI * 2)
+  gCtx.fillStyle = spec
+  gCtx.fill()
+
+  // Thin atmosphere edge ring
+  gCtx.beginPath()
+  gCtx.arc(globeCX, globeCY, globeR, 0, Math.PI * 2)
+  gCtx.strokeStyle = 'rgba(80,160,255,.2)'
+  gCtx.lineWidth = 1.5
+  gCtx.stroke()
+
+  // Graticule lines — very faint cyan tint
+  gCtx.save()
+  gCtx.beginPath()
+  gCtx.arc(globeCX, globeCY, globeR - .5, 0, Math.PI * 2)
+  gCtx.clip()
+  gCtx.strokeStyle = 'rgba(0,229,255,.04)'
+  gCtx.lineWidth = .5
+  for (let lat = -60; lat <= 60; lat += 30) {
+    const latR = lat * Math.PI / 180
+    gCtx.beginPath(); let first = true
+    for (let lon = 0; lon <= 360; lon += 4) {
+      const lonR = lon * Math.PI / 180
+      const {x,y,z} = latLonToXYZ(latR, lonR, globeAngle)
+      const {sx,sy,vis} = projectXYZ(x,y,z)
+      if (!vis) { first=true; continue }
+      first ? (gCtx.moveTo(sx,sy),first=false) : gCtx.lineTo(sx,sy)
+    }
+    gCtx.stroke()
+  }
+  for (let lon = 0; lon < 180; lon += 30) {
+    const lonR = lon * Math.PI / 180
+    gCtx.beginPath(); let first = true
+    for (let lat = -90; lat <= 90; lat += 4) {
+      const latR = lat * Math.PI / 180
+      const {x,y,z} = latLonToXYZ(latR, lonR, globeAngle)
+      const {sx,sy,vis} = projectXYZ(x,y,z)
+      if (!vis) { first=true; continue }
+      first ? (gCtx.moveTo(sx,sy),first=false) : gCtx.lineTo(sx,sy)
+    }
+    gCtx.stroke()
+  }
+  gCtx.restore()
 
   // Pings
   const now = Date.now()
@@ -658,39 +773,29 @@ function drawGlobe() {
     const r = p.maxR * age
     const alpha = 1 - age
     const color = p.type === 'ok' ? '0,229,255' : '255,45,85'
-    // Ripple rings
     for (let i = 0; i < 3; i++) {
       const ir = r * (1 - i * .25)
       if (ir < 0) continue
       gCtx.beginPath()
       gCtx.arc(sx, sy, ir, 0, Math.PI * 2)
-      gCtx.strokeStyle = `rgba(${color},${alpha * (.6 - i*.15)})`
-      gCtx.lineWidth = 1
+      gCtx.strokeStyle = `rgba(${color},${alpha * (.7 - i*.18)})`
+      gCtx.lineWidth = 1.2
       gCtx.stroke()
     }
-    // Core dot
     gCtx.beginPath()
     gCtx.arc(sx, sy, 2.5, 0, Math.PI * 2)
-    gCtx.fillStyle = `rgba(${color},${alpha * .9 + .1})`
+    gCtx.fillStyle = `rgba(${color},${alpha * .95 + .05})`
     gCtx.fill()
-    // Glow
-    const glow = gCtx.createRadialGradient(sx,sy,0,sx,sy,6)
-    glow.addColorStop(0, `rgba(${color},.3)`)
+    const glow = gCtx.createRadialGradient(sx,sy,0,sx,sy,8)
+    glow.addColorStop(0, `rgba(${color},.4)`)
     glow.addColorStop(1, `rgba(${color},0)`)
     gCtx.beginPath()
-    gCtx.arc(sx, sy, 6, 0, Math.PI * 2)
+    gCtx.arc(sx, sy, 8, 0, Math.PI * 2)
     gCtx.fillStyle = glow
     gCtx.fill()
   })
 
-  // Globe border
-  gCtx.beginPath()
-  gCtx.arc(globeCX, globeCY, globeR, 0, Math.PI * 2)
-  gCtx.strokeStyle = 'rgba(0,229,255,.15)'
-  gCtx.lineWidth = 1
-  gCtx.stroke()
-
-  globeAngle += .002
+  globeAngle += .0015
   requestAnimationFrame(drawGlobe)
 }
 
