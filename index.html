@@ -10,94 +10,76 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#060a0d;
-  --surface:#0b1117;
-  --surface2:#101820;
-  --g:#00e5ff;
-  --g2:rgba(0,229,255,.55);
-  --g3:rgba(0,229,255,.1);
-  --g4:rgba(0,229,255,.04);
-  --r:#ff2d55;
-  --r2:rgba(255,45,85,.12);
-  --amber:#ffb700;
-  --border:rgba(0,229,255,.1);
-  --border2:rgba(0,229,255,.22);
-  --text:#b8d4dc;
-  --text2:rgba(184,212,220,.45);
-  --mono:'Space Mono',monospace;
-  --orb:'Syncopate',sans-serif;
+  --bg:#060a0d;--surface:#0b1117;--surface2:#101820;
+  --g:#00e5ff;--g2:rgba(0,229,255,.55);--g3:rgba(0,229,255,.1);--g4:rgba(0,229,255,.04);
+  --r:#ff2d55;--r2:rgba(255,45,85,.12);--amber:#ffb700;--purple:#9d4edd;
+  --border:rgba(0,229,255,.1);--border2:rgba(0,229,255,.22);
+  --text:#b8d4dc;--text2:rgba(184,212,220,.45);
+  --mono:'Space Mono',monospace;--orb:'Syncopate',sans-serif;
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--mono);overflow:hidden;cursor:crosshair}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
-background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px)}
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.03) 3px,rgba(0,0,0,.03) 4px)}
 
-/* PARALLAX STARFIELD */
-#starfield{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.star-layer{position:absolute;inset:-100px;transition:transform .1s linear}
+/* STARFIELD */
+#star-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
 
 /* TOPBAR */
-#topbar{
-  position:fixed;top:0;left:0;right:0;height:38px;z-index:100;
+#topbar{position:fixed;top:0;left:0;right:0;height:38px;z-index:200;
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 20px;border-bottom:1px solid var(--border);
-  background:rgba(6,10,13,.92);backdrop-filter:blur(12px);
-}
-.tb-left{display:flex;align-items:center;gap:16px}
+  padding:0 18px;border-bottom:1px solid var(--border);
+  background:rgba(6,10,13,.95);backdrop-filter:blur(12px)}
+.tb-left{display:flex;align-items:center;gap:14px}
 .tb-logo{font-family:var(--orb);font-size:11px;font-weight:700;color:var(--g);letter-spacing:.2em}
 .tb-sep{width:1px;height:14px;background:var(--border2)}
-.tb-tag{font-size:12px;color:var(--text2);letter-spacing:.15em}
-.tb-right{display:flex;align-items:center;gap:20px;font-size:12px;color:var(--text2);letter-spacing:.1em}
-#tb-time{color:var(--text);font-size:10px}
-.pulse{width:5px;height:5px;border-radius:50%;background:var(--g);animation:blink 2s ease-in-out infinite}
+.tb-tag{font-size:10px;color:var(--text2);letter-spacing:.1em}
+.tb-right{display:flex;align-items:center;gap:16px;font-size:10px;color:var(--text2)}
+#tb-time{color:var(--text);font-size:10px;font-family:var(--mono)}
+.pulse{width:5px;height:5px;border-radius:50%;background:var(--g);animation:blink 2s ease-in-out infinite;flex-shrink:0}
 .pulse.off{background:var(--r)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 
 /* SCREENS */
-.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .6s,transform .6s;z-index:10}
+.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  transition:opacity .6s,transform .6s;z-index:10}
 .screen.out{opacity:0;pointer-events:none;transform:scale(.97)}
 
-/* ==================== LOCK SCREEN ==================== */
-#lock{flex-direction:column;gap:0;background:transparent}
-.lock-bg{position:absolute;inset:0;background:var(--bg);z-index:-1}
-
-.lock-ring-wrap{position:relative;width:300px;height:300px;display:flex;align-items:center;justify-content:center}
+/* ═══════════ LOCK ═══════════ */
+#lock{flex-direction:column;gap:0}
+.lock-ring-wrap{position:relative;width:280px;height:280px;display:flex;align-items:center;justify-content:center}
 .ring{position:absolute;border-radius:50%;border:1px solid var(--border)}
-.ring-1{width:100%;height:100%;animation:ring-pulse 4s ease-in-out infinite}
-.ring-2{width:72%;height:72%;border-color:rgba(0,229,255,.16);animation:ring-pulse 4s ease-in-out .5s infinite}
-.ring-3{width:46%;height:46%;border-color:rgba(0,229,255,.22);animation:ring-pulse 4s ease-in-out 1s infinite}
-@keyframes ring-pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.ring-1{width:100%;height:100%;animation:rp 4s ease-in-out infinite}
+.ring-2{width:72%;height:72%;border-color:rgba(0,229,255,.16);animation:rp 4s ease-in-out .5s infinite}
+.ring-3{width:46%;height:46%;border-color:rgba(0,229,255,.22);animation:rp 4s ease-in-out 1s infinite}
+@keyframes rp{0%,100%{opacity:.4}50%{opacity:1}}
 .sweep-wrap{position:absolute;width:100%;height:100%;border-radius:50%;overflow:hidden;animation:spin 4s linear infinite}
-.sweep-line{position:absolute;top:50%;left:50%;width:50%;height:1px;background:linear-gradient(90deg,rgba(0,229,255,.05),var(--g));transform-origin:left center}
+.sweep-line{position:absolute;top:50%;left:50%;width:50%;height:1px;
+  background:linear-gradient(90deg,rgba(0,229,255,.05),var(--g));transform-origin:left center}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 .lock-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px}
-.nfc-card{
-  width:110px;height:74px;background:var(--surface);
-  border:1px solid var(--border2);border-radius:10px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  position:relative;overflow:hidden;
-}
+.nfc-card{width:100px;height:68px;background:var(--surface);border:1px solid var(--border2);
+  border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;position:relative;overflow:hidden}
 .nfc-card::before{content:'';position:absolute;top:-30%;left:-30%;width:60%;height:60%;
-  background:radial-gradient(circle,rgba(0,229,255,.08) 0%,transparent 70%);
-  animation:card-glow 3s ease-in-out infinite}
-@keyframes card-glow{0%,100%{opacity:.5}50%{opacity:1}}
+  background:radial-gradient(circle,rgba(0,229,255,.08),transparent 70%);animation:cg 3s ease-in-out infinite}
+@keyframes cg{0%,100%{opacity:.5}50%{opacity:1}}
 .chip{width:28px;height:22px;border:1px solid rgba(0,229,255,.25);border-radius:3px;
-display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rgba(0,229,255,.03)}
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rgba(0,229,255,.03)}
 .chip-c{background:rgba(0,229,255,.12);border-radius:1px}
 .chip-c.lit{background:rgba(0,229,255,.4)}
 .waves{display:flex;align-items:center;gap:3px}
-.wave{border-radius:50%;border:1px solid rgba(0,229,255,.4);animation:wave-out 1.8s ease-in-out infinite}
+.wave{border-radius:50%;border:1px solid rgba(0,229,255,.4);animation:wo 1.8s ease-in-out infinite}
 .wave:nth-child(1){width:6px;height:6px}
 .wave:nth-child(2){width:10px;height:10px;animation-delay:.18s}
 .wave:nth-child(3){width:14px;height:14px;animation-delay:.36s}
-@keyframes wave-out{0%,100%{opacity:.25}50%{opacity:.9}}
-.lock-label{font-family:var(--orb);font-size:12px;font-weight:400;letter-spacing:.3em;color:var(--text2);text-align:center;line-height:2;margin-top:24px}
+@keyframes wo{0%,100%{opacity:.25}50%{opacity:.9}}
+.lock-label{font-family:var(--orb);font-size:9px;letter-spacing:.3em;color:var(--text2);text-align:center;line-height:2;margin-top:24px}
 #lock-msg{font-size:10px;letter-spacing:.2em;min-height:16px;text-align:center;margin-top:8px;transition:color .3s}
 #lock-msg.ok{color:var(--g)}
 #lock-msg.fail{color:var(--r);animation:shake .3s}
 #lock-msg.enroll{color:var(--amber)}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.bracket{position:absolute;width:24px;height:24px;border-color:var(--border2);border-style:solid}
+.bracket{position:absolute;width:22px;height:22px;border-color:var(--border2);border-style:solid}
 .bracket.tl{top:20px;left:20px;border-width:1px 0 0 1px}
 .bracket.tr{top:20px;right:20px;border-width:1px 1px 0 0}
 .bracket.bl{bottom:20px;left:20px;border-width:0 0 1px 1px}
@@ -108,100 +90,153 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
 #flash.ok{background:rgba(0,229,255,.06)}
 #flash.fail{background:rgba(255,45,85,.08)}
 
-/* ==================== DASHBOARD ==================== */
-#dash{flex-direction:column;align-items:stretch;background:transparent;padding-top:38px;overflow:hidden}
+/* ═══════════ DASHBOARD ═══════════ */
+#dash{flex-direction:column;align-items:stretch;padding-top:38px;overflow:hidden;background:transparent}
 .dash-inner{display:grid;grid-template-rows:auto 1fr auto;height:calc(100vh - 38px);position:relative;z-index:1}
 
-/* TOP STAT ROW */
-.stat-row{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--border);background:rgba(6,10,13,.85);backdrop-filter:blur(8px)}
-.stat{padding:12px 16px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--border);position:relative;overflow:hidden}
+/* STAT ROW */
+.stat-row{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--border);
+  background:rgba(6,10,13,.88);backdrop-filter:blur(8px)}
+.stat{padding:10px 14px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--border)}
 .stat:last-child{border-right:none}
-.stat-l{font-size:10px;letter-spacing:.3em;color:var(--text2);text-transform:uppercase}
-.stat-v{font-family:var(--orb);font-size:18px;font-weight:700;line-height:1.1;color:var(--text)}
-.stat-v.g{color:var(--g)}
-.stat-v.r{color:var(--r)}
-.stat-v.a{color:var(--amber)}
-.stat-u{font-size:11px;color:var(--text2)}
+.stat-l{font-size:9px;letter-spacing:.25em;color:var(--text2);text-transform:uppercase}
+.stat-v{font-family:var(--orb);font-size:17px;font-weight:700;line-height:1.1;color:var(--text)}
+.stat-v.g{color:var(--g)}.stat-v.r{color:var(--r)}.stat-v.a{color:var(--amber)}
+.stat-u{font-size:9px;color:var(--text2)}
 
-/* MAIN LAYOUT: 3 column */
-.main-grid{display:grid;grid-template-columns:1fr 420px 280px;flex:1;min-height:0;overflow:hidden}
-.panel{display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden;background:rgba(6,10,13,.7);backdrop-filter:blur(6px)}
+/* MAIN 3-COL */
+.main-grid{display:grid;grid-template-columns:1fr 400px 260px;min-height:0;overflow:hidden}
+.panel{display:flex;flex-direction:column;border-right:1px solid var(--border);overflow:hidden;
+  background:rgba(6,10,13,.72);backdrop-filter:blur(6px)}
 .panel:last-child{border-right:none}
-.panel-head{padding:10px 16px;border-bottom:1px solid var(--border);font-size:10px;letter-spacing:.3em;color:var(--text2);text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;background:rgba(6,10,13,.5)}
+.panel-head{padding:9px 14px;border-bottom:1px solid var(--border);font-size:9px;letter-spacing:.25em;
+  color:var(--text2);text-transform:uppercase;flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
 .panel-body{flex:1;overflow-y:auto;overflow-x:hidden}
 .panel-body::-webkit-scrollbar{width:2px}
 .panel-body::-webkit-scrollbar-thumb{background:var(--border2)}
 
-/* ==================== GLOBE ==================== */
-#globe-panel{position:relative}
+/* GLOBE */
 #globe-canvas{width:100%;height:100%;display:block}
-.globe-overlay{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none}
-.ping-label{position:absolute;font-size:11px;color:var(--g);letter-spacing:.1em;transform:translate(-50%,-200%);white-space:nowrap;animation:ping-fade 3s forwards}
-@keyframes ping-fade{0%{opacity:1;transform:translate(-50%,-200%) scale(1)}100%{opacity:0;transform:translate(-50%,-280%) scale(.8)}}
+.ping-label{position:absolute;font-size:9px;color:var(--g);letter-spacing:.1em;
+  transform:translate(-50%,-200%);white-space:nowrap;animation:pf 3s forwards;pointer-events:none}
+@keyframes pf{0%{opacity:1;transform:translate(-50%,-200%)}100%{opacity:0;transform:translate(-50%,-300%)}}
 
-/* ==================== RIGHT COLUMN ==================== */
-.right-col{display:grid;grid-template-rows:1fr 1fr 1fr;border-left:1px solid var(--border)}
+/* LOCATION OVERRIDE MODAL */
+#loc-modal{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;
+  background:rgba(6,10,13,.85);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s}
+#loc-modal.open{opacity:1;pointer-events:all}
+.loc-box{background:var(--surface);border:1px solid var(--border2);border-radius:4px;padding:28px;width:360px}
+.loc-title{font-family:var(--orb);font-size:12px;color:var(--g);letter-spacing:.2em;margin-bottom:16px}
+.loc-row{display:flex;gap:10px;margin-bottom:12px}
+.loc-input{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);
+  font-family:var(--mono);font-size:11px;padding:8px 10px;border-radius:2px;outline:none}
+.loc-input:focus{border-color:var(--g)}
+.loc-btns{display:flex;gap:8px;margin-top:16px}
+.btn{font-family:var(--mono);font-size:9px;letter-spacing:.15em;padding:7px 14px;border-radius:2px;
+  cursor:pointer;text-transform:uppercase;transition:all .2s;border:1px solid}
+.btn-g{border-color:var(--g);color:var(--g);background:transparent}
+.btn-g:hover{background:var(--g3)}
+.btn-r{border-color:rgba(255,45,85,.4);color:rgba(255,45,85,.7);background:transparent}
+.btn-r:hover{border-color:var(--r);color:var(--r);background:var(--r2)}
 
-/* BIOMETRIC GHOST */
-#ghost-panel{position:relative;overflow:hidden}
+/* RIGHT COL */
+.right-col{display:grid;grid-template-rows:1fr auto auto;border-left:1px solid var(--border)}
+
+/* GHOST */
 #ghost-canvas{position:absolute;inset:0;width:100%;height:100%}
-.ghost-label{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.25em;color:var(--text2)}
-
-/* CARD DNA */
-#dna-panel{}
-#dna-canvas{width:100%;display:block}
-.dna-hash{font-size:11px;color:var(--text2);padding:4px 12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.05em}
+.ghost-label{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:9px;
+  letter-spacing:.2em;color:var(--text2)}
+#card-name-badge{position:absolute;top:8px;left:0;right:0;text-align:center;font-size:9px;
+  font-family:var(--orb);letter-spacing:.15em;color:var(--amber);opacity:0;transition:opacity .5s}
 
 /* TTL RING */
-#ttl-panel{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px}
-#ttl-ring-wrap{position:relative;width:100px;height:100px;flex-shrink:0}
+#ttl-ring-wrap{position:relative;width:100px;height:100px}
 #ttl-svg{width:100%;height:100%}
 .ttl-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-#ttl-num{font-family:var(--orb);font-size:22px;font-weight:700;color:var(--g);line-height:1}
-#ttl-unit{font-size:10px;color:var(--text2);letter-spacing:.2em}
+#ttl-num{font-family:var(--orb);font-size:20px;font-weight:700;color:var(--g);line-height:1}
+#ttl-unit{font-size:8px;color:var(--text2);letter-spacing:.15em}
 .rad-warning{color:var(--amber)!important}
-.rad-danger{color:var(--r)!important;animation:rad-blink .6s step-end infinite}
-@keyframes rad-blink{0%,100%{opacity:1}50%{opacity:.3}}
-#ttl-bar-label{font-size:10px;color:var(--text2);letter-spacing:.15em;text-align:center}
+.rad-danger{color:var(--r)!important;animation:rblink .6s step-end infinite}
+@keyframes rblink{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* BOTTOM STRIP: Log + Terminal */
-.bottom-strip{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);background:rgba(6,10,13,.85);max-height:200px}
+/* DNA + CARD MANAGER */
+#dna-canvas{width:100%;display:block;cursor:pointer;transition:opacity .2s}
+#dna-canvas:hover{opacity:.8}
+.dna-hash{font-size:9px;color:var(--text2);padding:4px 12px;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap;letter-spacing:.05em}
 
-/* AUTH LOG */
-.log-item{display:grid;grid-template-columns:5px 70px 1fr auto;align-items:center;gap:8px;padding:7px 14px;border-bottom:1px solid rgba(0,229,255,.05);font-size:12px;animation:fadein .3s ease}
-@keyframes fadein{from{opacity:0;transform:translateY(-2px)}to{opacity:1;transform:none}}
-.log-dot{width:4px;height:4px;border-radius:50%}
-.log-dot.ok{background:var(--g)}
-.log-dot.fail{background:var(--r)}
-.log-dot.enroll{background:var(--amber)}
-.log-time{color:var(--text2)}
-.log-ev{color:var(--text)}
-.log-meta{color:var(--text2);font-size:11px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px}
+/* CARD DRAWER */
+#card-drawer{max-height:0;overflow:hidden;transition:max-height .4s ease;border-top:1px solid transparent}
+#card-drawer.open{max-height:320px;border-top-color:var(--border)}
+.drawer-inner{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.drawer-row{display:flex;justify-content:space-between;align-items:center;font-size:10px}
+.drawer-label{color:var(--text2);letter-spacing:.1em}
+.drawer-val{color:var(--text);font-family:var(--mono)}
+.drawer-val.g{color:var(--g)}
+.drawer-val.a{color:var(--amber)}
+.drawer-val.r{color:var(--r)}
+.use-bar{height:3px;background:rgba(0,229,255,.08);border-radius:2px;margin:4px 0}
+.use-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--g),var(--amber));transition:width .6s}
+.revoke-btn{width:100%;font-family:var(--mono);font-size:9px;letter-spacing:.15em;padding:7px;
+  background:transparent;border:1px solid rgba(255,45,85,.3);color:rgba(255,45,85,.6);
+  border-radius:2px;cursor:pointer;text-transform:uppercase;transition:all .2s;margin-top:4px}
+.revoke-btn:hover{border-color:var(--r);color:var(--r);background:var(--r2)}
+.enroll-btn{width:100%;font-family:var(--mono);font-size:9px;letter-spacing:.15em;padding:7px;
+  background:transparent;border:1px solid rgba(255,183,0,.3);color:rgba(255,183,0,.6);
+  border-radius:2px;cursor:pointer;text-transform:uppercase;transition:all .2s;margin-top:4px}
+.enroll-btn:hover{border-color:var(--amber);color:var(--amber);background:rgba(255,183,0,.08)}
 
-/* TERMINAL */
-.term-body{flex:1;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:0;height:100%}
+/* ENROLLED CARDS LIST */
+.card-item{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:8px;
+  padding:8px 14px;border-bottom:1px solid rgba(0,229,255,.05);cursor:pointer;transition:background .15s}
+.card-item:hover{background:var(--g4)}
+.card-item.active{background:rgba(0,229,255,.06);border-left:2px solid var(--g)}
+.card-icon-wrap{width:28px;height:28px;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-info{display:flex;flex-direction:column;gap:2px;overflow:hidden}
+.card-nick{font-size:10px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.card-sub{font-size:9px;color:var(--text2)}
+.card-status{font-size:9px;font-family:var(--orb)}
+.card-status.ok{color:var(--g)}
+.card-status.rev{color:var(--r)}
+
+/* HEXDUMP */
+#hexdump{padding:5px 12px;font-size:9px;color:rgba(0,229,255,.4);line-height:1.7;
+  font-family:var(--mono);letter-spacing:.06em;max-height:52px;overflow:hidden}
+
+/* SNR */
+#snr-canvas{width:100%;display:block}
+
+/* BOTTOM STRIP */
+.bottom-strip{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);
+  background:rgba(6,10,13,.88);max-height:180px}
+.term-body{flex:1;overflow-y:auto;padding:8px 12px;display:flex;flex-direction:column;gap:0;height:100%}
 .term-body::-webkit-scrollbar{width:2px}
 .term-body::-webkit-scrollbar-thumb{background:var(--border2)}
-.tl{font-size:12px;line-height:1.9;display:block}
-.t-p{color:var(--g)}
-.t-ok{color:rgba(0,229,255,.7)}
-.t-fail{color:rgba(255,45,85,.8)}
-.t-dim{color:var(--text2)}
-.t-enroll{color:rgba(255,183,0,.8)}
-.t-hex{color:rgba(0,229,255,.4);font-size:11px}
+.tl{font-size:10px;line-height:1.85;display:block}
+.t-p{color:var(--g)}.t-ok{color:rgba(0,229,255,.7)}.t-fail{color:rgba(255,45,85,.8)}
+.t-dim{color:var(--text2)}.t-enroll{color:rgba(255,183,0,.8)}.t-warn{color:var(--amber)}
 .cur{animation:blink 1s step-end infinite}
 
-/* LOCK BTN */
-.lock-btn{font-family:var(--mono);font-size:11px;letter-spacing:.15em;padding:4px 10px;background:transparent;border:1px solid rgba(255,45,85,.3);color:rgba(255,45,85,.6);border-radius:2px;cursor:pointer;text-transform:uppercase;transition:all .2s}
+.lock-btn{font-family:var(--mono);font-size:9px;letter-spacing:.15em;padding:4px 10px;
+  background:transparent;border:1px solid rgba(255,45,85,.3);color:rgba(255,45,85,.6);
+  border-radius:2px;cursor:pointer;text-transform:uppercase;transition:all .2s}
 .lock-btn:hover{border-color:var(--r);color:var(--r);background:var(--r2)}
+
+/* NICK EDIT */
+.nick-edit{background:transparent;border:none;border-bottom:1px solid var(--border);
+  color:var(--text);font-family:var(--mono);font-size:10px;width:100%;outline:none;padding:2px 0}
+.nick-edit:focus{border-bottom-color:var(--g)}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;right:24px;z-index:999;font-size:10px;letter-spacing:.12em;
+  padding:10px 18px;background:var(--surface);border:1px solid var(--border2);border-radius:3px;
+  color:var(--text);opacity:0;transition:opacity .3s;pointer-events:none}
+#toast.show{opacity:1}
 </style>
 </head>
 <body>
 
-<!-- STARFIELD -->
-<div id="starfield">
-  <canvas id="star-canvas" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
-</div>
+<canvas id="star-canvas"></canvas>
 
 <div id="topbar">
   <div class="tb-left">
@@ -217,17 +252,12 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
   </div>
 </div>
 
-<!-- ==================== LOCK SCREEN ==================== -->
+<!-- LOCK -->
 <div id="lock" class="screen">
-  <div class="lock-bg"></div>
-  <div class="bracket tl"></div>
-  <div class="bracket tr"></div>
-  <div class="bracket bl"></div>
-  <div class="bracket br"></div>
+  <div class="bracket tl"></div><div class="bracket tr"></div>
+  <div class="bracket bl"></div><div class="bracket br"></div>
   <div class="lock-ring-wrap">
-    <div class="ring ring-1"></div>
-    <div class="ring ring-2"></div>
-    <div class="ring ring-3"></div>
+    <div class="ring ring-1"></div><div class="ring ring-2"></div><div class="ring ring-3"></div>
     <div class="sweep-wrap"><div class="sweep-line"></div></div>
     <div class="lock-center">
       <div class="nfc-card">
@@ -236,9 +266,7 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
           <div class="chip-c lit"></div><div class="chip-c"></div><div class="chip-c lit"></div>
           <div class="chip-c"></div><div class="chip-c lit"></div><div class="chip-c"></div>
         </div>
-        <div class="waves">
-          <div class="wave"></div><div class="wave"></div><div class="wave"></div>
-        </div>
+        <div class="waves"><div class="wave"></div><div class="wave"></div><div class="wave"></div></div>
       </div>
     </div>
   </div>
@@ -246,150 +274,135 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
   <div id="lock-msg"></div>
 </div>
 
-<!-- ==================== DASHBOARD ==================== -->
+<!-- DASHBOARD -->
 <div id="dash" class="screen out">
   <div class="dash-inner">
 
-    <!-- STAT ROW -->
     <div class="stat-row">
-      <div class="stat">
-        <span class="stat-l">Status</span>
-        <span class="stat-v g" id="sys-status">UNLOCKED</span>
-        <span class="stat-u">session active</span>
-      </div>
-      <div class="stat">
-        <span class="stat-l">Session TTL</span>
-        <span class="stat-v a" id="ttl-stat">300s</span>
-        <span class="stat-u">countdown active</span>
-      </div>
-      <div class="stat">
-        <span class="stat-l">Total Events</span>
-        <span class="stat-v" id="ev-total">—</span>
-        <span class="stat-u">auth attempts</span>
-      </div>
-      <div class="stat">
-        <span class="stat-l">Last Auth</span>
-        <span class="stat-v g" id="last-auth" style="font-size:13px;padding-top:2px">—</span>
-        <span class="stat-u">timestamp</span>
-      </div>
-      <div class="stat" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between">
+      <div class="stat"><span class="stat-l">Status</span><span class="stat-v g" id="sys-status">UNLOCKED</span><span class="stat-u">session active</span></div>
+      <div class="stat"><span class="stat-l">Session TTL</span><span class="stat-v a" id="ttl-stat">300s</span><span class="stat-u">countdown active</span></div>
+      <div class="stat"><span class="stat-l">Total Events</span><span class="stat-v" id="ev-total">—</span><span class="stat-u">auth attempts</span></div>
+      <div class="stat"><span class="stat-l">Active Card</span><span class="stat-v g" id="active-card" style="font-size:12px;padding-top:2px">—</span><span class="stat-u">last authenticated</span></div>
+      <div class="stat" style="flex-direction:row;align-items:center;justify-content:space-between">
         <div style="display:flex;flex-direction:column;gap:2px">
-          <span class="stat-l">Control</span>
-          <span class="stat-v" style="font-size:11px;color:var(--text2)">SYSTEM</span>
+          <span class="stat-l">Reader Location</span>
+          <span class="stat-v" style="font-size:11px;color:var(--text2)" id="loc-display">AUTO</span>
         </div>
-        <button class="lock-btn" onclick="doLock()">⬛ LOCK</button>
+        <div style="display:flex;gap:6px;align-items:center">
+          <button class="btn btn-g" style="font-size:8px;padding:4px 8px" onclick="openLocModal()">⊕ SET</button>
+          <button class="lock-btn" onclick="doLock()">⬛ LOCK</button>
+        </div>
       </div>
     </div>
 
-    <!-- MAIN 3-COL GRID -->
     <div class="main-grid">
 
-      <!-- COL 1: GLOBE -->
-      <div class="panel" id="globe-panel" style="position:relative">
+      <!-- GLOBE -->
+      <div class="panel" style="position:relative">
         <div class="panel-head">
           <span>Global NFC Event Map</span>
-          <span id="ping-count" style="color:var(--g);font-size:10px">0 PINGS</span>
+          <span id="ping-count" style="color:var(--g);font-size:9px">0 PINGS</span>
         </div>
         <div style="flex:1;position:relative">
           <canvas id="globe-canvas"></canvas>
-          <div class="globe-overlay" id="globe-overlay"></div>
+          <div id="globe-overlay" style="position:absolute;inset:0;pointer-events:none"></div>
         </div>
       </div>
 
-      <!-- COL 2: LOG + AUTH INFO -->
+      <!-- MIDDLE: Log + DNA + Hexdump -->
       <div class="panel">
         <div class="panel-head">
           <span>Auth Event Log</span>
-          <span id="ok-count" style="color:var(--g);font-size:10px"></span>
+          <span id="ok-count" style="color:var(--g);font-size:9px"></span>
         </div>
-        <div class="panel-body" id="log-list"></div>
+        <div class="panel-body" id="log-list" style="max-height:200px"></div>
+
+        <!-- ENROLLED CARDS -->
+        <div style="border-top:1px solid var(--border)">
+          <div class="panel-head" style="border-bottom:none">
+            <span>Enrolled Cards</span>
+            <span id="card-count" style="font-size:9px;color:var(--amber)">0 CARDS</span>
+          </div>
+          <div id="cards-list" style="max-height:120px;overflow-y:auto"></div>
+        </div>
 
         <!-- CARD DNA -->
         <div style="border-top:1px solid var(--border)">
-          <div class="panel-head" style="border-bottom:none;margin-bottom:0">
-            <span>Card DNA · SHA256 Barcode</span>
-            <span id="dna-uid" style="font-size:10px;color:var(--amber)">NO CARD</span>
+          <div class="panel-head" style="border-bottom:none">
+            <span>Card DNA · SHA256</span>
+            <span id="dna-uid" style="font-size:9px;color:var(--amber)">NO CARD</span>
           </div>
-          <canvas id="dna-canvas" height="36"></canvas>
-          <div class="dna-hash" id="dna-hash-txt">awaiting card tap...</div>
+          <canvas id="dna-canvas" height="32" title="Click to expand card details"></canvas>
+          <div class="dna-hash" id="dna-hash-txt">tap a card to render DNA...</div>
+          <!-- INLINE CARD DRAWER -->
+          <div id="card-drawer">
+            <div class="drawer-inner" id="drawer-content"></div>
+          </div>
         </div>
 
-        <!-- HEXDUMP STRIP -->
+        <!-- HEXDUMP -->
         <div style="border-top:1px solid var(--border)">
-          <div class="panel-head" style="border-bottom:none">
-            <span>NFC Byte Stream · Live Hexdump</span>
-          </div>
-          <div id="hexdump" style="padding:6px 12px;font-size:11px;color:rgba(0,229,255,.45);line-height:1.8;font-family:var(--mono);letter-spacing:.08em;max-height:60px;overflow:hidden">
-            00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-          </div>
+          <div class="panel-head" style="border-bottom:none"><span>NFC Byte Stream</span></div>
+          <div id="hexdump">00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00</div>
         </div>
       </div>
 
-      <!-- COL 3: GHOST + TTL RING -->
+      <!-- RIGHT COL -->
       <div class="right-col">
 
-        <!-- BIOMETRIC GHOST -->
-        <div class="panel" id="ghost-panel" style="border-right:none;position:relative">
-          <div class="panel-head" style="border-right:none"><span>Biometric Identity Ghost</span></div>
+        <!-- GHOST -->
+        <div class="panel" style="border-right:none;position:relative">
+          <div class="panel-head" style="border-right:none"><span>Identity Ghost</span></div>
           <div style="flex:1;position:relative">
             <canvas id="ghost-canvas"></canvas>
+            <div id="card-name-badge"></div>
             <div class="ghost-label" id="ghost-label">AWAITING AUTH</div>
           </div>
         </div>
 
         <!-- TTL RING -->
-        <div class="panel" style="border-right:none;align-items:center;justify-content:center;gap:6px;padding:12px">
+        <div class="panel" style="border-right:none;align-items:center;justify-content:center;gap:6px;padding:10px">
           <div class="panel-head" style="border-right:none;align-self:stretch;border-bottom:1px solid var(--border)"><span>Session Countdown</span></div>
-          <div id="ttl-ring-wrap" style="position:relative;width:110px;height:110px;margin-top:8px">
-            <svg id="ttl-svg" viewBox="0 0 110 110" style="width:110px;height:110px">
-              <!-- Tick marks -->
+          <div id="ttl-ring-wrap" style="margin-top:8px">
+            <svg id="ttl-svg" viewBox="0 0 110 110">
               <g id="tick-marks"></g>
-              <!-- Background track -->
-              <circle cx="55" cy="55" r="46" fill="none" stroke="rgba(0,229,255,.08)" stroke-width="6"/>
-              <!-- Glow ring -->
-              <circle cx="55" cy="55" r="46" fill="none" stroke="rgba(0,229,255,.04)" stroke-width="12"/>
-              <!-- Active arc -->
-              <circle id="ttl-arc" cx="55" cy="55" r="46" fill="none"
-                stroke="var(--g)" stroke-width="4"
-                stroke-dasharray="289 289" stroke-dashoffset="0"
-                stroke-linecap="round"
-                transform="rotate(-90 55 55)"/>
-              <!-- Radiation symbol -->
-              <g id="rad-sym" transform="translate(55,55)" opacity=".2">
-                <circle r="5" fill="var(--r)"/>
-                <path d="M0,-12 A12,12,0,0,1,10.4,6 L4,2 A5,5,0,0,0,0,-5 Z" fill="var(--r)"/>
-                <path d="M10.4,6 A12,12,0,0,1,-10.4,6 L-4,2 A5,5,0,0,0,4,2 Z" fill="var(--r)"/>
-                <path d="M-10.4,6 A12,12,0,0,1,0,-12 L0,-5 A5,5,0,0,0,-4,2 Z" fill="var(--r)"/>
+              <circle cx="55" cy="55" r="46" fill="none" stroke="rgba(0,229,255,.07)" stroke-width="6"/>
+              <circle id="ttl-arc" cx="55" cy="55" r="46" fill="none" stroke="var(--g)" stroke-width="4"
+                stroke-dasharray="289 289" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 55 55)"/>
+              <g id="rad-sym" transform="translate(55,55)" opacity=".18">
+                <circle r="4" fill="var(--r)"/>
+                <path d="M0,-11 A11,11,0,0,1,9.5,5.5 L4,2 A5,5,0,0,0,0,-5Z" fill="var(--r)"/>
+                <path d="M9.5,5.5 A11,11,0,0,1,-9.5,5.5 L-4,2 A5,5,0,0,0,4,2Z" fill="var(--r)"/>
+                <path d="M-9.5,5.5 A11,11,0,0,1,0,-11 L0,-5 A5,5,0,0,0,-4,2Z" fill="var(--r)"/>
               </g>
             </svg>
             <div class="ttl-center">
               <div id="ttl-num">300</div>
-              <div id="ttl-unit">SECONDS</div>
+              <div id="ttl-unit">SEC</div>
             </div>
           </div>
-          <div id="ttl-bar-label" style="font-size:10px;color:var(--text2);letter-spacing:.15em">SESSION ACTIVE</div>
-          <!-- Entropy meter -->
-          <div style="align-self:stretch;margin-top:4px;padding:0 8px">
-            <div style="font-size:10px;letter-spacing:.2em;color:var(--text2);margin-bottom:4px">CARD ENTROPY</div>
-            <div style="height:4px;background:rgba(0,229,255,.08);border-radius:2px;overflow:hidden">
-              <div id="entropy-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--g),var(--amber));border-radius:2px;transition:width .6s ease"></div>
+          <div id="ttl-bar-label" style="font-size:9px;color:var(--text2);letter-spacing:.12em">SESSION ACTIVE</div>
+          <div style="align-self:stretch;padding:0 8px;margin-top:4px">
+            <div style="font-size:9px;letter-spacing:.15em;color:var(--text2);margin-bottom:3px">ENTROPY</div>
+            <div style="height:3px;background:rgba(0,229,255,.07);border-radius:2px">
+              <div id="entropy-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--g),var(--amber));border-radius:2px;transition:width .6s"></div>
             </div>
-            <div style="display:flex;justify-content:space-between;margin-top:3px">
-              <span style="font-size:10px;color:var(--text2)">LOW</span>
-              <span id="entropy-val" style="font-size:10px;color:var(--amber)">—</span>
-              <span style="font-size:10px;color:var(--text2)">HIGH</span>
+            <div style="display:flex;justify-content:space-between;margin-top:2px">
+              <span style="font-size:9px;color:var(--text2)">LOW</span>
+              <span id="entropy-val" style="font-size:9px;color:var(--amber)">—</span>
+              <span style="font-size:9px;color:var(--text2)">HIGH</span>
             </div>
           </div>
         </div>
 
-        <!-- SNR SCANNER -->
+        <!-- SNR -->
         <div class="panel" style="border-right:none;border-top:1px solid var(--border)">
-          <div class="panel-head" style="border-right:none"><span>RF Signal · SNR Scanner</span></div>
-          <div style="flex:1;position:relative;padding:8px 12px">
-            <canvas id="snr-canvas" style="width:100%;display:block"></canvas>
-            <div style="display:flex;justify-content:space-between;margin-top:4px">
-              <span style="font-size:10px;color:var(--text2)">FREQ: 13.56 MHz</span>
-              <span id="snr-val" style="font-size:10px;color:var(--g)">SNR: — dB</span>
+          <div class="panel-head" style="border-right:none"><span>RF Signal · 13.56 MHz</span></div>
+          <div style="flex:1;padding:6px 10px">
+            <canvas id="snr-canvas" style="width:100%"></canvas>
+            <div style="display:flex;justify-content:space-between;margin-top:3px">
+              <span style="font-size:9px;color:var(--text2)">NFC ISO/IEC 14443</span>
+              <span id="snr-val" style="font-size:9px;color:var(--g)">SNR: — dB</span>
             </div>
           </div>
         </div>
@@ -397,12 +410,12 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
       </div>
     </div>
 
-    <!-- BOTTOM TERMINAL -->
-    <div class="bottom-strip" style="border-top:1px solid var(--border)">
+    <!-- BOTTOM -->
+    <div class="bottom-strip">
       <div style="display:flex;flex-direction:column;border-right:1px solid var(--border)">
         <div class="panel-head"><span>Supabase Realtime · auth_events</span></div>
         <div class="term-body" id="terminal">
-          <span class="tl"><span class="t-p">$</span> <span class="t-dim">initializing nfc//vault subsystems...</span></span>
+          <span class="tl"><span class="t-p">$</span> <span class="t-dim">initializing nfc//vault...</span></span>
           <span class="tl"><span class="t-p">$</span> <span class="cur t-dim">█</span></span>
         </div>
       </div>
@@ -410,9 +423,8 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
         <div class="panel-head"><span>System Diagnostics</span></div>
         <div class="term-body" id="diag-terminal">
           <span class="tl"><span class="t-p">></span> <span class="t-dim">ESP32 · ONLINE</span></span>
-          <span class="tl"><span class="t-p">></span> <span class="t-dim">PN532 · 13.56MHz RF · READY</span></span>
+          <span class="tl"><span class="t-p">></span> <span class="t-dim">PN532 · 13.56MHz · READY</span></span>
           <span class="tl"><span class="t-p">></span> <span class="t-dim">SHA256 ENGINE · LOADED</span></span>
-          <span class="tl"><span class="t-p">></span> <span class="t-dim">SUPABASE · CONNECTING...</span></span>
         </div>
       </div>
     </div>
@@ -420,207 +432,164 @@ display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;padding:3px;background:rg
   </div>
 </div>
 
+<!-- LOCATION MODAL -->
+<div id="loc-modal">
+  <div class="loc-box">
+    <div class="loc-title">SET READER LOCATION</div>
+    <div style="font-size:10px;color:var(--text2);margin-bottom:14px">Override auto GeoIP with a fixed location for this reader.</div>
+    <div class="loc-row">
+      <input class="loc-input" id="loc-city" placeholder="City name (e.g. Chennai)">
+    </div>
+    <div class="loc-row">
+      <input class="loc-input" id="loc-lat" placeholder="Latitude (e.g. 13.08)">
+      <input class="loc-input" id="loc-lon" placeholder="Longitude (e.g. 80.27)">
+    </div>
+    <div class="loc-btns">
+      <button class="btn btn-g" onclick="saveLocOverride()">SAVE OVERRIDE</button>
+      <button class="btn btn-g" onclick="useGeoIP()">USE GEOIP</button>
+      <button class="btn btn-r" onclick="closeLocModal()">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
 <div id="flash"></div>
 
 <script>
-// ─────────────────── CONFIG ───────────────────
+// ─── CONFIG ───────────────────────────────────────────
 const SUPABASE_URL = 'https://mnwkxokymxlliinxhmbt.supabase.co'
 const SUPABASE_KEY = 'sb_publishable_4nhjGBs1S1HW05jQCoyE9A_Cx76dxxM'
 const SESSION_TTL  = 300
+const WEBHOOK_URL  = '' // optional: fires on session timeout
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
-let sessionExpiry = null, ttlInterval = null, locked = true
-let pingCount = 0
-let mouseX = 0, mouseY = 0
 
-// ─────────────────── CLOCK ───────────────────
+let sessionExpiry = null, ttlInterval = null, locked = true
+let pingCount = 0, mouseX = 0, mouseY = 0
+let currentToken = null, currentCardData = null
+let readerLat = null, readerLon = null, readerCity = 'AUTO'
+let enrolledCards = {} // token -> { nick, useCount, lastSeen, revoked, lat, lon, city }
+let drawerOpen = false
+
+// ─── CLOCK ────────────────────────────────────────────
 setInterval(() => {
   document.getElementById('tb-time').textContent = new Date().toTimeString().slice(0,8)
 }, 1000)
 
-// ─────────────────── MOUSE PARALLAX ───────────────────
+// ─── MOUSE ────────────────────────────────────────────
 document.addEventListener('mousemove', e => {
-  mouseX = (e.clientX / window.innerWidth - .5) * 2
-  mouseY = (e.clientY / window.innerHeight - .5) * 2
+  mouseX = (e.clientX / innerWidth - .5) * 2
+  mouseY = (e.clientY / innerHeight - .5) * 2
 })
 
-// ─────────────────── STARFIELD ───────────────────
+// ─── TOAST ────────────────────────────────────────────
+function toast(msg, dur = 2500) {
+  const t = document.getElementById('toast')
+  t.textContent = msg
+  t.classList.add('show')
+  setTimeout(() => t.classList.remove('show'), dur)
+}
+
+// ─── STARFIELD ────────────────────────────────────────
 const starCanvas = document.getElementById('star-canvas')
-const starCtx = starCanvas.getContext('2d')
+const sCtx = starCanvas.getContext('2d')
 let stars = []
 function initStars() {
-  starCanvas.width = window.innerWidth
-  starCanvas.height = window.innerHeight
-  stars = []
-  for (let i = 0; i < 280; i++) {
-    stars.push({
-      x: Math.random() * starCanvas.width,
-      y: Math.random() * starCanvas.height,
-      r: Math.random() * 1.2,
-      speed: Math.random() * .3 + .05,
-      layer: Math.floor(Math.random() * 3),
-      twinkle: Math.random() * Math.PI * 2
-    })
-  }
+  starCanvas.width = innerWidth; starCanvas.height = innerHeight
+  stars = Array.from({length:280}, () => ({
+    x: Math.random() * innerWidth, y: Math.random() * innerHeight,
+    r: Math.random() * 1.2, speed: Math.random() * .3 + .05,
+    layer: Math.floor(Math.random() * 3), twinkle: Math.random() * Math.PI * 2
+  }))
 }
 function drawStars() {
-  starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height)
+  sCtx.clearRect(0, 0, starCanvas.width, starCanvas.height)
   const t = Date.now() / 1000
   stars.forEach(s => {
-    const lx = mouseX * (s.layer + 1) * 8
-    const ly = mouseY * (s.layer + 1) * 8
-    const alpha = .3 + .3 * Math.sin(t * s.speed * 2 + s.twinkle)
-    starCtx.beginPath()
-    starCtx.arc(s.x + lx, s.y + ly, s.r, 0, Math.PI * 2)
-    starCtx.fillStyle = `rgba(${s.layer===2?'0,229,255':'184,212,220'},${alpha})`
-    starCtx.fill()
+    const lx = mouseX * (s.layer + 1) * 8, ly = mouseY * (s.layer + 1) * 8
+    const a = .3 + .3 * Math.sin(t * s.speed * 2 + s.twinkle)
+    sCtx.beginPath()
+    sCtx.arc(s.x + lx, s.y + ly, s.r, 0, Math.PI * 2)
+    sCtx.fillStyle = `rgba(${s.layer===2?'0,229,255':'184,212,220'},${a})`
+    sCtx.fill()
   })
   requestAnimationFrame(drawStars)
 }
-initStars()
-drawStars()
+initStars(); drawStars()
 window.addEventListener('resize', initStars)
 
-// ─────────────────── GLOBE ───────────────────
+// ─── GEOIP ────────────────────────────────────────────
+async function fetchGeoIP() {
+  try {
+    const r = await fetch('https://ipapi.co/json/', {signal: AbortSignal.timeout(4000)})
+    const d = await r.json()
+    return { lat: d.latitude, lon: d.longitude, city: d.city || 'UNKNOWN' }
+  } catch {
+    // fallback: Chennai (project origin)
+    return { lat: 10.99, lon: 76.96, city: 'COIMBATORE' }
+  }
+}
+
+async function initGeoIP() {
+  if (readerLat !== null) return
+  const geo = await fetchGeoIP()
+  readerLat = geo.lat; readerLon = geo.lon; readerCity = geo.city
+  document.getElementById('loc-display').textContent = geo.city.toUpperCase()
+  diagLine(`GEOIP · ${geo.city.toUpperCase()} (${geo.lat.toFixed(2)}, ${geo.lon.toFixed(2)})`, 'ok')
+}
+
+// ─── LOCATION MODAL ───────────────────────────────────
+function openLocModal() { document.getElementById('loc-modal').classList.add('open') }
+function closeLocModal() { document.getElementById('loc-modal').classList.remove('open') }
+function saveLocOverride() {
+  const city = document.getElementById('loc-city').value.trim() || 'CUSTOM'
+  const lat  = parseFloat(document.getElementById('loc-lat').value)
+  const lon  = parseFloat(document.getElementById('loc-lon').value)
+  if (isNaN(lat) || isNaN(lon)) { toast('ENTER VALID COORDINATES'); return }
+  readerLat = lat; readerLon = lon; readerCity = city.toUpperCase()
+  document.getElementById('loc-display').textContent = readerCity
+  closeLocModal()
+  diagLine(`LOCATION OVERRIDE · ${readerCity}`, 'ok')
+  toast(`LOCATION SET: ${readerCity}`)
+}
+async function useGeoIP() {
+  readerLat = null
+  const geo = await fetchGeoIP()
+  readerLat = geo.lat; readerLon = geo.lon; readerCity = geo.city
+  document.getElementById('loc-display').textContent = geo.city.toUpperCase()
+  closeLocModal()
+  toast(`GEOIP: ${geo.city.toUpperCase()}`)
+}
+
+// ─── GLOBE ────────────────────────────────────────────
 const globeCanvas = document.getElementById('globe-canvas')
 const gCtx = globeCanvas.getContext('2d')
-let globeW, globeH, globeR, globeCX, globeCY
-let globeAngle = 0
-let pings = []
-let globeGraticules = []
+let globeW, globeH, globeR, globeCX, globeCY, globeAngle = 0
+let pings = [], globeDots = []
 
-// Generate random dots for globe surface
-let globeDots = []
-function buildGlobe() {
-  const panel = document.getElementById('globe-panel')
-  const wrapper = panel.querySelector('div[style*="position:relative"]') || panel
-  globeW = wrapper.offsetWidth
-  globeH = wrapper.offsetHeight - 32
-  globeCanvas.width = globeW
-  globeCanvas.height = globeH
-  globeR = Math.min(globeW, globeH) * .38
-  globeCX = globeW / 2
-  globeCY = globeH / 2
-  globeDots = []
-  // Fibonacci sphere distribution — tag land vs ocean
-  const N = 900
-  for (let i = 0; i < N; i++) {
-    const phi = Math.acos(1 - 2 * (i + .5) / N)
-    const theta = Math.PI * (1 + Math.sqrt(5)) * i
-    const lat = Math.PI/2 - phi
-    const lon = theta
-    const land = isLand(lat, lon)
-    globeDots.push({ lat, lon, land })
-  }
-}
-
-function latLonToXYZ(lat, lon, angle) {
-  const x = Math.cos(lat) * Math.cos(lon + angle)
-  const y = Math.sin(lat)
-  const z = Math.cos(lat) * Math.sin(lon + angle)
-  return { x, y, z }
-}
-
-function projectXYZ(x, y, z) {
-  return {
-    sx: globeCX + x * globeR,
-    sy: globeCY - y * globeR,
-    vis: z > -.15
-  }
-}
-
-// Famous cities for ping locations
-const CITIES = [
-  { name:'TOKYO', lat: 35.68, lon: 139.69 },
-  { name:'LONDON', lat: 51.5, lon: -.12 },
-  { name:'NYC', lat: 40.71, lon: -74.01 },
-  { name:'MUMBAI', lat: 19.07, lon: 72.87 },
-  { name:'SYDNEY', lat: -33.86, lon: 151.21 },
-  { name:'BERLIN', lat: 52.52, lon: 13.40 },
-  { name:'SAO PAULO', lat: -23.55, lon: -46.63 },
-  { name:'CAIRO', lat: 30.04, lon: 31.24 },
-  { name:'MOSCOW', lat: 55.75, lon: 37.62 },
-  { name:'SINGAPORE', lat: 1.35, lon: 103.82 },
-  { name:'CHICAGO', lat: 41.88, lon: -87.63 },
-  { name:'DUBAI', lat: 25.20, lon: 55.27 },
-  { name:'SEOUL', lat: 37.57, lon: 126.98 },
-  { name:'TORONTO', lat: 43.65, lon: -79.38 },
-  { name:'PARIS', lat: 48.86, lon: 2.35 },
-]
-
-function addGlobePing(cityIdx) {
-  const city = CITIES[cityIdx !== undefined ? cityIdx : Math.floor(Math.random() * CITIES.length)]
-  const lat = city.lat * Math.PI / 180
-  const lon = city.lon * Math.PI / 180
-  pings.push({
-    lat, lon,
-    name: city.name,
-    born: Date.now(),
-    ttl: 4000,
-    maxR: 18,
-    type: Math.random() > .3 ? 'ok' : 'fail'
-  })
-  pingCount++
-  document.getElementById('ping-count').textContent = pingCount + ' PINGS'
-
-  // floating label
-  const { x, y, z } = latLonToXYZ(lat, lon, globeAngle)
-  if (z > 0) {
-    const { sx, sy } = projectXYZ(x, y, z)
-    const el = document.createElement('div')
-    el.className = 'ping-label'
-    el.textContent = city.name
-    const ov = document.getElementById('globe-overlay')
-    ov.style.position = 'absolute'
-    ov.style.inset = '32px 0 0 0'
-    el.style.left = sx + 'px'
-    el.style.top = sy + 'px'
-    ov.appendChild(el)
-    setTimeout(() => el.remove(), 3000)
-  }
-}
-
-// ── Earth land polygons: simplified lat/lon outlines ─────────────────
-// Each entry is an array of [lon,lat] in degrees, closed polygon
 const LAND_POLYS = [
-  // North America
-  [[-168,71],[-140,70],[-130,55],[-125,49],[-115,32],[-117,32],[-105,19],[-87,16],[-83,10],[-77,8],[-76,9],[-82,10],[-85,10],[-88,16],[-90,18],[-94,16],[-97,19],[-105,20],[-109,23],[-108,27],[-114,32],[-120,34],[-124,37],[-124,49],[-130,54],[-140,58],[-155,59],[-162,60],[-168,66],[-168,71]],
-  // Greenland
+  [[-168,71],[-140,70],[-130,55],[-124,49],[-115,32],[-117,32],[-105,19],[-87,16],[-83,10],[-77,8],[-82,10],[-85,10],[-88,16],[-94,16],[-97,19],[-105,20],[-114,32],[-120,34],[-124,37],[-124,49],[-130,54],[-140,58],[-155,59],[-162,60],[-168,66],[-168,71]],
   [[-70,76],[-52,83],[-28,83],[-18,76],[-24,65],[-44,59],[-58,62],[-68,70],[-70,76]],
-  // South America
   [[-78,0],[-76,2],[-69,1],[-50,0],[-35,-5],[-35,-10],[-38,-13],[-43,-23],[-52,-33],[-60,-38],[-68,-55],[-73,-50],[-76,-43],[-74,-33],[-76,-15],[-80,-3],[-78,0]],
-  // Europe
-  [[10,55],[5,48],[0,44],[-5,44],[-10,37],[0,36],[12,37],[15,40],[18,40],[20,38],[26,38],[28,41],[30,43],[28,45],[18,44],[15,45],[13,46],[10,47],[6,46],[2,44],[0,44],[-2,44],[-5,44],[-8,42],[-10,37],[-8,36],[0,36],[5,44],[10,55]],
-  // Scandinavia
+  [[10,55],[5,48],[0,44],[-5,44],[-10,37],[0,36],[12,37],[15,40],[18,40],[20,38],[26,38],[28,41],[30,43],[18,44],[15,45],[13,46],[10,47],[6,46],[2,44],[0,44],[-2,44],[-5,44],[-8,42],[-10,37],[-8,36],[0,36],[5,44],[10,55]],
   [[5,58],[7,58],[10,55],[12,56],[18,57],[24,60],[28,65],[30,70],[28,71],[22,70],[16,69],[14,66],[12,63],[5,58]],
-  // Africa
   [[-17,15],[-15,12],[-15,5],[0,5],[10,5],[15,0],[25,-5],[35,-5],[40,-3],[42,10],[44,12],[43,15],[40,22],[33,28],[32,30],[34,32],[36,38],[42,42],[48,30],[44,22],[43,15],[36,12],[42,12],[48,8],[42,0],[38,-3],[34,-5],[28,-12],[33,-18],[35,-25],[28,-32],[20,-35],[16,-29],[12,-18],[8,-5],[2,5],[-5,5],[-10,4],[-15,6],[-17,12],[-17,15]],
-  // Asia (simplified)
-  [[30,43],[38,47],[45,42],[50,30],[55,22],[60,22],[62,20],[66,22],[68,20],[70,22],[75,20],[72,15],[78,8],[80,14],[86,20],[90,22],[95,20],[100,4],[104,1],[108,3],[110,4],[118,22],[120,30],[122,35],[126,38],[128,40],[130,42],[135,43],[140,44],[140,42],[136,35],[132,34],[128,30],[122,22],[116,22],[114,22],[110,18],[108,15],[104,10],[102,4],[98,2],[95,4],[92,8],[85,22],[80,20],[76,22],[70,22],[68,28],[60,30],[56,42],[55,50],[60,55],[68,55],[75,55],[82,55],[88,52],[95,52],[100,52],[106,52],[110,52],[116,52],[122,50],[126,48],[128,48],[132,48],[136,48],[142,48],[145,45],[140,42],[135,43],[130,42],[126,38],[122,35],[118,30],[118,22],[110,18],[104,10],[100,4],[96,2],[92,5],[85,22],[80,14],[76,8],[72,15],[70,22],[64,22],[60,22],[56,24],[50,30],[45,42],[38,47],[30,43]],
-  // Australia
+  [[30,43],[38,47],[45,42],[50,30],[55,22],[60,22],[62,20],[66,22],[68,20],[70,22],[75,20],[72,15],[78,8],[80,14],[86,20],[90,22],[95,20],[100,4],[104,1],[108,3],[110,4],[118,22],[120,30],[122,35],[126,38],[128,40],[130,42],[135,43],[140,44],[140,42],[136,35],[132,34],[128,30],[122,22],[116,22],[110,18],[108,15],[104,10],[102,4],[98,2],[95,4],[92,8],[85,22],[80,20],[76,22],[70,22],[68,28],[60,30],[56,42],[55,50],[60,55],[68,55],[75,55],[82,55],[88,52],[95,52],[100,52],[106,52],[110,52],[116,52],[122,50],[126,48],[128,48],[132,48],[136,48],[142,48],[145,45],[140,42],[135,43],[130,42],[126,38],[122,35],[118,30],[118,22],[110,18],[104,10],[100,4],[96,2],[92,5],[85,22],[80,14],[76,8],[72,15],[70,22],[64,22],[60,22],[56,24],[50,30],[45,42],[38,47],[30,43]],
   [[114,-22],[114,-32],[120,-34],[126,-34],[130,-33],[136,-34],[140,-36],[148,-38],[150,-36],[152,-30],[150,-25],[146,-20],[140,-18],[136,-12],[132,-12],[128,-15],[122,-18],[114,-22]],
-  // Japan
   [[130,31],[132,33],[134,34],[136,36],[138,38],[140,40],[141,42],[140,44],[136,44],[132,34],[130,32],[130,31]],
-  // UK
   [[-5,50],[-3,50],[0,52],[1,54],[0,57],[-2,58],[-5,58],[-6,56],[-5,52],[-5,50]],
-  // Antarctica (partial)
   [[-180,-72],[-120,-68],[-60,-72],[0,-70],[60,-68],[120,-68],[180,-72],[-180,-72]],
-  // Iceland
-  [[-24,63],[-14,63],[-13,65],[-20,66],[-24,65],[-24,63]],
 ]
 
 function isLand(lat, lon) {
-  // Point-in-polygon for all land polys
   const latD = lat * 180 / Math.PI
   let lonD = lon * 180 / Math.PI
-  // normalize lon to -180..180
   while (lonD > 180) lonD -= 360
   while (lonD < -180) lonD += 360
   for (const poly of LAND_POLYS) {
     let inside = false
     for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
-      const xi = poly[i][0], yi = poly[i][1]
-      const xj = poly[j][0], yj = poly[j][1]
+      const [xi, yi] = poly[i], [xj, yj] = poly[j]
       if (((yi > latD) !== (yj > latD)) && (lonD < (xj - xi) * (latD - yi) / (yj - yi) + xi)) inside = !inside
     }
     if (inside) return true
@@ -628,137 +597,113 @@ function isLand(lat, lon) {
   return false
 }
 
+function buildGlobe() {
+  const panel = document.getElementById('globe-canvas').parentElement
+  globeW = panel.offsetWidth; globeH = panel.offsetHeight
+  globeCanvas.width = globeW; globeCanvas.height = globeH
+  globeR = Math.min(globeW, globeH) * .38
+  globeCX = globeW / 2; globeCY = globeH / 2
+  globeDots = []
+  const N = 800
+  for (let i = 0; i < N; i++) {
+    const phi = Math.acos(1 - 2 * (i + .5) / N)
+    const theta = Math.PI * (1 + Math.sqrt(5)) * i
+    const lat = Math.PI / 2 - phi, lon = theta
+    globeDots.push({ lat, lon, land: isLand(lat, lon) })
+  }
+}
+
+function latLonToXYZ(lat, lon, angle) {
+  return {
+    x: Math.cos(lat) * Math.cos(lon + angle),
+    y: Math.sin(lat),
+    z: Math.cos(lat) * Math.sin(lon + angle)
+  }
+}
+function project(x, y, z) {
+  return { sx: globeCX + x * globeR, sy: globeCY - y * globeR, vis: z > -.1 }
+}
+
+function addGlobePing(lat, lon, city, type = 'ok') {
+  const latR = lat * Math.PI / 180, lonR = lon * Math.PI / 180
+  pings.push({ lat: latR, lon: lonR, name: city, born: Date.now(), ttl: 4000, maxR: 20, type })
+  pingCount++
+  document.getElementById('ping-count').textContent = pingCount + ' PINGS'
+
+  const {x, y, z} = latLonToXYZ(latR, lonR, globeAngle)
+  if (z > 0) {
+    const {sx, sy} = project(x, y, z)
+    const el = document.createElement('div')
+    el.className = 'ping-label'
+    el.textContent = city.toUpperCase()
+    el.style.left = sx + 'px'; el.style.top = sy + 'px'
+    document.getElementById('globe-overlay').appendChild(el)
+    setTimeout(() => el.remove(), 3000)
+  }
+}
+
 function drawGlobe() {
-  if (!globeW) { buildGlobe(); }
+  if (!globeW) { buildGlobe() }
   gCtx.clearRect(0, 0, globeW, globeH)
 
-  // Deep space behind globe
-  const space = gCtx.createRadialGradient(globeCX, globeCY, globeR * .7, globeCX, globeCY, globeR * 1.6)
-  space.addColorStop(0, 'rgba(10,30,50,.0)')
-  space.addColorStop(.6, 'rgba(5,15,30,.15)')
-  space.addColorStop(1, 'rgba(0,10,20,.35)')
-  gCtx.beginPath()
-  gCtx.arc(globeCX, globeCY, globeR * 1.6, 0, Math.PI * 2)
-  gCtx.fillStyle = space
-  gCtx.fill()
+  // Space
+  const sp = gCtx.createRadialGradient(globeCX, globeCY, globeR*.7, globeCX, globeCY, globeR*1.6)
+  sp.addColorStop(0,'rgba(10,30,50,0)'); sp.addColorStop(1,'rgba(0,10,20,.3)')
+  gCtx.beginPath(); gCtx.arc(globeCX, globeCY, globeR*1.6, 0, Math.PI*2)
+  gCtx.fillStyle = sp; gCtx.fill()
 
-  // Clip to globe sphere
+  // Clip + ocean
   gCtx.save()
-  gCtx.beginPath()
-  gCtx.arc(globeCX, globeCY, globeR - .5, 0, Math.PI * 2)
-  gCtx.clip()
+  gCtx.beginPath(); gCtx.arc(globeCX, globeCY, globeR-.5, 0, Math.PI*2); gCtx.clip()
+  const oc = gCtx.createRadialGradient(globeCX-globeR*.2, globeCY-globeR*.2, 0, globeCX, globeCY, globeR)
+  oc.addColorStop(0,'#0d2a3f'); oc.addColorStop(1,'#060f1a')
+  gCtx.fillStyle = oc; gCtx.fillRect(globeCX-globeR, globeCY-globeR, globeR*2, globeR*2)
 
-  // Ocean base
-  const ocean = gCtx.createRadialGradient(globeCX - globeR*.25, globeCY - globeR*.25, 0, globeCX, globeCY, globeR)
-  ocean.addColorStop(0, '#0d2a3f')
-  ocean.addColorStop(.5, '#091e2e')
-  ocean.addColorStop(1, '#060f1a')
-  gCtx.fillStyle = ocean
-  gCtx.fillRect(globeCX - globeR, globeCY - globeR, globeR * 2, globeR * 2)
-
-  // Draw land & ocean dots
   globeDots.forEach(d => {
     const {x,y,z} = latLonToXYZ(d.lat, d.lon, globeAngle)
-    const {sx,sy,vis} = projectXYZ(x,y,z)
+    const {sx,sy,vis} = project(x,y,z)
     if (!vis) return
-    const light = .4 + z * .6
+    const l = .4 + z * .6
     if (d.land) {
-      // Land: green-brown tones
       const lat = d.lat * 180 / Math.PI
-      let r, g, b
-      if (Math.abs(lat) > 65) { r=230;g=240;b=245 } // Ice caps - white
-      else if (Math.abs(lat) > 55) { r=100;g=130;b=90 } // Tundra
-      else if (Math.abs(lat) < 15) { r=40;g=100;b=50 } // Tropical jungle
-      else { r=70;g=110;b=60 } // Temperate
-      gCtx.beginPath()
-      gCtx.arc(sx, sy, 1.1, 0, Math.PI * 2)
-      gCtx.fillStyle = `rgba(${Math.round(r*light)},${Math.round(g*light)},${Math.round(b*light)},0.9)`
+      let r,g,b
+      if (Math.abs(lat)>65){r=230;g=240;b=245}
+      else if(Math.abs(lat)>55){r=100;g=130;b=90}
+      else if(Math.abs(lat)<15){r=40;g=100;b=50}
+      else{r=70;g=110;b=60}
+      gCtx.beginPath(); gCtx.arc(sx,sy,1.1,0,Math.PI*2)
+      gCtx.fillStyle=`rgba(${Math.round(r*l)},${Math.round(g*l)},${Math.round(b*l)},.9)`
       gCtx.fill()
     } else {
-      // Ocean shimmer
-      const shimmer = z > .6 ? .25 : .08
-      gCtx.beginPath()
-      gCtx.arc(sx, sy, .6, 0, Math.PI * 2)
-      gCtx.fillStyle = `rgba(30,120,200,${shimmer * light})`
-      gCtx.fill()
+      gCtx.beginPath(); gCtx.arc(sx,sy,.6,0,Math.PI*2)
+      gCtx.fillStyle=`rgba(30,120,200,${(z>.6?.22:.07)*l})`; gCtx.fill()
     }
   })
-
-  // Polar ice caps overlay
-  ;[{latMin:70,col:'rgba(220,235,255,'},{latMax:-70,col:'rgba(210,230,255,'}].forEach(cap => {
-    globeDots.forEach(d => {
-      const latD = d.lat * 180 / Math.PI
-      if (cap.latMin && latD < cap.latMin) return
-      if (cap.latMax && latD > cap.latMax) return
-      const {x,y,z} = latLonToXYZ(d.lat, d.lon, globeAngle)
-      const {sx,sy,vis} = projectXYZ(x,y,z)
-      if (!vis) return
-      gCtx.beginPath()
-      gCtx.arc(sx, sy, 1.2, 0, Math.PI * 2)
-      gCtx.fillStyle = cap.col + (z*.5+.3) + ')'
-      gCtx.fill()
-    })
-  })
-
   gCtx.restore()
 
-  // Atmosphere halo (outside clip)
-  const atmos = gCtx.createRadialGradient(globeCX, globeCY, globeR * .92, globeCX, globeCY, globeR * 1.18)
-  atmos.addColorStop(0, 'rgba(60,160,255,.18)')
-  atmos.addColorStop(.4, 'rgba(30,100,200,.08)')
-  atmos.addColorStop(1, 'rgba(0,50,150,0)')
-  gCtx.beginPath()
-  gCtx.arc(globeCX, globeCY, globeR * 1.18, 0, Math.PI * 2)
-  gCtx.fillStyle = atmos
-  gCtx.fill()
+  // Atmosphere
+  const atm = gCtx.createRadialGradient(globeCX,globeCY,globeR*.92,globeCX,globeCY,globeR*1.18)
+  atm.addColorStop(0,'rgba(60,160,255,.18)'); atm.addColorStop(1,'rgba(0,50,150,0)')
+  gCtx.beginPath(); gCtx.arc(globeCX,globeCY,globeR*1.18,0,Math.PI*2)
+  gCtx.fillStyle=atm; gCtx.fill()
 
-  // Specular highlight
-  const spec = gCtx.createRadialGradient(globeCX - globeR*.3, globeCY - globeR*.3, 0, globeCX - globeR*.1, globeCY - globeR*.1, globeR * .7)
-  spec.addColorStop(0, 'rgba(255,255,255,.08)')
-  spec.addColorStop(.3, 'rgba(255,255,255,.03)')
-  spec.addColorStop(1, 'rgba(255,255,255,0)')
-  gCtx.beginPath()
-  gCtx.arc(globeCX, globeCY, globeR, 0, Math.PI * 2)
-  gCtx.fillStyle = spec
-  gCtx.fill()
+  // Specular
+  const spec=gCtx.createRadialGradient(globeCX-globeR*.3,globeCY-globeR*.3,0,globeCX-globeR*.1,globeCY-globeR*.1,globeR*.7)
+  spec.addColorStop(0,'rgba(255,255,255,.07)'); spec.addColorStop(1,'rgba(255,255,255,0)')
+  gCtx.beginPath(); gCtx.arc(globeCX,globeCY,globeR,0,Math.PI*2); gCtx.fillStyle=spec; gCtx.fill()
+  gCtx.beginPath(); gCtx.arc(globeCX,globeCY,globeR,0,Math.PI*2)
+  gCtx.strokeStyle='rgba(80,160,255,.18)'; gCtx.lineWidth=1.5; gCtx.stroke()
 
-  // Thin atmosphere edge ring
-  gCtx.beginPath()
-  gCtx.arc(globeCX, globeCY, globeR, 0, Math.PI * 2)
-  gCtx.strokeStyle = 'rgba(80,160,255,.2)'
-  gCtx.lineWidth = 1.5
-  gCtx.stroke()
-
-  // Graticule lines — very faint cyan tint
-  gCtx.save()
-  gCtx.beginPath()
-  gCtx.arc(globeCX, globeCY, globeR - .5, 0, Math.PI * 2)
-  gCtx.clip()
-  gCtx.strokeStyle = 'rgba(0,229,255,.04)'
-  gCtx.lineWidth = .5
-  for (let lat = -60; lat <= 60; lat += 30) {
-    const latR = lat * Math.PI / 180
-    gCtx.beginPath(); let first = true
-    for (let lon = 0; lon <= 360; lon += 4) {
-      const lonR = lon * Math.PI / 180
-      const {x,y,z} = latLonToXYZ(latR, lonR, globeAngle)
-      const {sx,sy,vis} = projectXYZ(x,y,z)
-      if (!vis) { first=true; continue }
-      first ? (gCtx.moveTo(sx,sy),first=false) : gCtx.lineTo(sx,sy)
-    }
-    gCtx.stroke()
-  }
-  for (let lon = 0; lon < 180; lon += 30) {
-    const lonR = lon * Math.PI / 180
-    gCtx.beginPath(); let first = true
-    for (let lat = -90; lat <= 90; lat += 4) {
-      const latR = lat * Math.PI / 180
-      const {x,y,z} = latLonToXYZ(latR, lonR, globeAngle)
-      const {sx,sy,vis} = projectXYZ(x,y,z)
-      if (!vis) { first=true; continue }
-      first ? (gCtx.moveTo(sx,sy),first=false) : gCtx.lineTo(sx,sy)
-    }
-    gCtx.stroke()
+  // Grid
+  gCtx.save(); gCtx.beginPath(); gCtx.arc(globeCX,globeCY,globeR-.5,0,Math.PI*2); gCtx.clip()
+  gCtx.strokeStyle='rgba(0,229,255,.04)'; gCtx.lineWidth=.5
+  for(let lat=-60;lat<=60;lat+=30){
+    const latR=lat*Math.PI/180; gCtx.beginPath(); let first=true
+    for(let lon=0;lon<=360;lon+=5){
+      const {x,y,z}=latLonToXYZ(latR,lon*Math.PI/180,globeAngle)
+      const {sx,sy,vis}=project(x,y,z); if(!vis){first=true;continue}
+      first?(gCtx.moveTo(sx,sy),first=false):gCtx.lineTo(sx,sy)
+    }; gCtx.stroke()
   }
   gCtx.restore()
 
@@ -766,595 +711,621 @@ function drawGlobe() {
   const now = Date.now()
   pings = pings.filter(p => now - p.born < p.ttl)
   pings.forEach(p => {
-    const {x,y,z} = latLonToXYZ(p.lat, p.lon, globeAngle)
-    const {sx,sy,vis} = projectXYZ(x,y,z)
-    if (!vis) return
-    const age = (now - p.born) / p.ttl
-    const r = p.maxR * age
-    const alpha = 1 - age
-    const color = p.type === 'ok' ? '0,229,255' : '255,45,85'
-    for (let i = 0; i < 3; i++) {
-      const ir = r * (1 - i * .25)
-      if (ir < 0) continue
-      gCtx.beginPath()
-      gCtx.arc(sx, sy, ir, 0, Math.PI * 2)
-      gCtx.strokeStyle = `rgba(${color},${alpha * (.7 - i*.18)})`
-      gCtx.lineWidth = 1.2
-      gCtx.stroke()
+    const {x,y,z}=latLonToXYZ(p.lat,p.lon,globeAngle)
+    const {sx,sy,vis}=project(x,y,z); if(!vis) return
+    const age=(now-p.born)/p.ttl, r=p.maxR*age, alpha=1-age
+    const col=p.type==='ok'?'0,229,255':'255,45,85'
+    for(let i=0;i<3;i++){
+      const ir=r*(1-i*.25); if(ir<0)continue
+      gCtx.beginPath(); gCtx.arc(sx,sy,ir,0,Math.PI*2)
+      gCtx.strokeStyle=`rgba(${col},${alpha*(.7-i*.18)})`; gCtx.lineWidth=1.2; gCtx.stroke()
     }
-    gCtx.beginPath()
-    gCtx.arc(sx, sy, 2.5, 0, Math.PI * 2)
-    gCtx.fillStyle = `rgba(${color},${alpha * .95 + .05})`
-    gCtx.fill()
-    const glow = gCtx.createRadialGradient(sx,sy,0,sx,sy,8)
-    glow.addColorStop(0, `rgba(${color},.4)`)
-    glow.addColorStop(1, `rgba(${color},0)`)
-    gCtx.beginPath()
-    gCtx.arc(sx, sy, 8, 0, Math.PI * 2)
-    gCtx.fillStyle = glow
-    gCtx.fill()
+    gCtx.beginPath(); gCtx.arc(sx,sy,2.5,0,Math.PI*2)
+    gCtx.fillStyle=`rgba(${col},${alpha*.9+.1})`; gCtx.fill()
   })
 
   globeAngle += .0015
   requestAnimationFrame(drawGlobe)
 }
 
-// Periodic demo pings
-function scheduleRandomPing() {
-  addGlobePing()
-  setTimeout(scheduleRandomPing, 1500 + Math.random() * 3000)
-}
-
-// ─────────────────── BIOMETRIC GHOST ───────────────────
+// ─── GHOST ────────────────────────────────────────────
 const ghostCanvas = document.getElementById('ghost-canvas')
-const gHostCtx = ghostCanvas.getContext('2d')
-let ghostParticles = []
-let ghostState = 'locked' // 'locked'|'assembling'|'assembled'|'shattering'
-let ghostFrame = 0
+const ghCtx = ghostCanvas.getContext('2d')
+let ghostParticles = [], ghostState = 'locked'
+let currentCardGeometry = null
 
-// Human silhouette outline points (normalized 0-1)
-function buildSilhouette() {
-  const pts = []
-  // Head
-  for (let a = 0; a < Math.PI * 2; a += .15) {
-    pts.push({ x: .5 + .12 * Math.cos(a), y: .15 + .1 * Math.sin(a), type:'head' })
+// Deterministic geometry from token — each card gets unique shape + palette
+function cardGeometry(token) {
+  if (!token) return null
+  const hash = (str) => {
+    let h = 0
+    for (let i = 0; i < str.length; i++) h = (Math.imul(31, h) + str.charCodeAt(i)) | 0
+    return Math.abs(h)
   }
-  // Body
-  for (let y = .25; y < .65; y += .03) {
-    const w = .08 + (y - .25) * .15
-    pts.push({ x: .5 - w + Math.random()*.02, y, type:'body' })
-    pts.push({ x: .5 + w + Math.random()*.02, y, type:'body' })
-    if (Math.random() > .5) pts.push({ x: .5 + (Math.random()-.5)*w*1.5, y, type:'body' })
-  }
-  // Arms
-  for (let y = .28; y < .58; y += .04) {
-    const armW = .18 + (y-.28)*.05
-    pts.push({ x: .5 - armW, y: y + .05, type:'arm' })
-    pts.push({ x: .5 + armW, y: y + .05, type:'arm' })
-  }
-  // Legs
-  for (let y = .65; y < 1; y += .03) {
-    const split = (y - .65) * .1
-    pts.push({ x: .46 - split, y, type:'leg' })
-    pts.push({ x: .54 + split, y, type:'leg' })
-  }
-  return pts
+  const h1 = hash(token), h2 = hash(token + 'salt'), h3 = hash(token + 'geo')
+  const hue = (h1 % 360), hue2 = (hue + 120 + h2 % 60) % 360
+  const sides = 3 + (h2 % 6) // 3-8 sided polygon
+  const innerRatio = .3 + (h3 % 40) / 100
+  return { hue, hue2, sides, innerRatio, seed: h1 }
 }
-const silhouettePts = buildSilhouette()
 
-function initGhostParticles(state) {
-  const w = ghostCanvas.width, h = ghostCanvas.height
-  ghostParticles = silhouettePts.map(p => {
-    const tx = p.x * w, ty = p.y * h
-    const angle = Math.random() * Math.PI * 2
-    const dist = 80 + Math.random() * 150
-    return {
-      tx, ty,
-      x: state === 'assembling' ? tx + Math.cos(angle)*dist : tx,
-      y: state === 'assembling' ? ty + Math.sin(angle)*dist : ty,
-      vx: 0, vy: 0,
-      r: .8 + Math.random() * 1.2,
-      type: p.type,
-      phase: Math.random() * Math.PI * 2,
-      scatter: { angle, dist }
+function buildSilhouette(w, h, geo) {
+  const particles = []
+  if (!geo) {
+    // default dispersed if no card
+    for (let i = 0; i < 80; i++) {
+      particles.push({ tx: Math.random()*w, ty: Math.random()*h,
+        x: Math.random()*w, y: Math.random()*h, r: .8, phase: Math.random()*Math.PI*2, hue: 180 })
     }
-  })
+    return particles
+  }
+
+  const cx = w/2, cy = h/2
+  const size = Math.min(w, h) * .32
+
+  // Outer polygon
+  for (let i = 0; i < geo.sides * 12; i++) {
+    const t = i / (geo.sides * 12)
+    const seg = Math.floor(t * geo.sides)
+    const segT = (t * geo.sides) % 1
+    const a1 = (seg / geo.sides) * Math.PI * 2 - Math.PI/2
+    const a2 = ((seg+1) / geo.sides) * Math.PI * 2 - Math.PI/2
+    const x = cx + Math.cos(a1 + (a2-a1)*segT) * size
+    const y = cy + Math.sin(a1 + (a2-a1)*segT) * size
+    particles.push({ tx:x, ty:y, x:cx+(Math.random()-.5)*w*.8, y:cy+(Math.random()-.5)*h*.8,
+      r: 1.2, phase: Math.random()*Math.PI*2, hue: geo.hue, type:'outer' })
+  }
+
+  // Inner star/shape
+  const inner = size * geo.innerRatio
+  for (let i = 0; i < geo.sides * 6; i++) {
+    const angle = (i / (geo.sides * 6)) * Math.PI * 2 - Math.PI/2
+    const r2 = inner * (.7 + .3 * Math.sin(angle * geo.sides * .5))
+    const x = cx + Math.cos(angle) * r2, y = cy + Math.sin(angle) * r2
+    particles.push({ tx:x, ty:y, x:cx+(Math.random()-.5)*w*.6, y:cy+(Math.random()-.5)*h*.6,
+      r: 1.0, phase: Math.random()*Math.PI*2, hue: geo.hue2, type:'inner' })
+  }
+
+  // Fill dots
+  for (let i = 0; i < 60; i++) {
+    const angle = (i / 60) * Math.PI * 2
+    const r2 = size * (.1 + Math.random() * .5)
+    const x = cx + Math.cos(angle) * r2, y = cy + Math.sin(angle) * r2
+    particles.push({ tx:x, ty:y, x:cx+(Math.random()-.5)*w, y:cy+(Math.random()-.5)*h,
+      r: .6, phase: Math.random()*Math.PI*2, hue: (geo.hue + 60) % 360, type:'fill' })
+  }
+
+  return particles
 }
 
 function resizeGhost() {
-  const el = document.getElementById('ghost-panel')
-  const inner = el.querySelector('div[style*="flex:1"]')
-  ghostCanvas.width = inner ? inner.offsetWidth : el.offsetWidth
-  ghostCanvas.height = inner ? inner.offsetHeight : el.offsetHeight - 32
-  initGhostParticles(ghostState)
+  const el = document.getElementById('ghost-panel') || ghostCanvas.parentElement.parentElement
+  const inner = ghostCanvas.parentElement
+  ghostCanvas.width = inner.offsetWidth; ghostCanvas.height = inner.offsetHeight
+  ghostParticles = buildSilhouette(ghostCanvas.width, ghostCanvas.height, currentCardGeometry)
 }
 
 function drawGhost() {
   const w = ghostCanvas.width, h = ghostCanvas.height
-  gHostCtx.clearRect(0, 0, w, h)
+  ghCtx.clearRect(0, 0, w, h)
   const t = Date.now() / 1000
 
   if (ghostState === 'locked') {
-    // Drifting dispersed particles
     ghostParticles.forEach(p => {
-      p.x += Math.cos(p.phase + t * .3) * .15
-      p.y += Math.sin(p.phase * 1.3 + t * .2) * .15
-      const alpha = .08 + .06 * Math.sin(t + p.phase)
-      gHostCtx.beginPath()
-      gHostCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-      gHostCtx.fillStyle = `rgba(184,212,220,${alpha})`
-      gHostCtx.fill()
+      p.x += Math.cos(p.phase + t * .25) * .12
+      p.y += Math.sin(p.phase * 1.3 + t * .18) * .12
+      ghCtx.beginPath(); ghCtx.arc(p.x, p.y, p.r, 0, Math.PI*2)
+      ghCtx.fillStyle = `rgba(184,212,220,${.05 + .04 * Math.sin(t + p.phase)})`
+      ghCtx.fill()
     })
-    document.getElementById('ghost-label').textContent = 'IDENTITY UNKNOWN'
     return requestAnimationFrame(drawGhost)
   }
 
   if (ghostState === 'assembling') {
-    let allDone = true
+    let done = true
     ghostParticles.forEach(p => {
       const dx = p.tx - p.x, dy = p.ty - p.y
-      p.x += dx * .06
-      p.y += dy * .06
-      if (Math.abs(dx) > .5 || Math.abs(dy) > .5) allDone = false
+      p.x += dx * .07; p.y += dy * .07
+      if (Math.abs(dx) > .8 || Math.abs(dy) > .8) done = false
       const dist = Math.sqrt(dx*dx + dy*dy)
-      const alpha = .2 + (1 - Math.min(dist/120, 1)) * .8
-      const color = p.type === 'head' ? '0,229,255' : p.type === 'arm' ? '0,200,230' : p.type === 'leg' ? '0,180,210' : '0,220,250'
-      gHostCtx.beginPath()
-      gHostCtx.arc(p.x, p.y, p.r * (1 + dist/80), 0, Math.PI * 2)
-      gHostCtx.fillStyle = `rgba(${color},${alpha})`
-      gHostCtx.fill()
+      const alpha = .15 + (1 - Math.min(dist/100,1)) * .85
+      ghCtx.beginPath(); ghCtx.arc(p.x, p.y, p.r * (1 + dist/60), 0, Math.PI*2)
+      ghCtx.fillStyle = `hsla(${p.hue},80%,60%,${alpha})`; ghCtx.fill()
     })
-    if (allDone) { ghostState = 'assembled'; document.getElementById('ghost-label').textContent = 'IDENTITY VERIFIED' }
+    if (done) { ghostState = 'assembled' }
     return requestAnimationFrame(drawGhost)
   }
 
   if (ghostState === 'assembled') {
-    // Breathing / scan line effect
     ghostParticles.forEach(p => {
-      const breathe = Math.sin(t * 1.2 + p.phase * .3) * 1.5
-      const alpha = .5 + .3 * Math.sin(t * .8 + p.phase)
-      const color = p.type === 'head' ? '0,229,255' : '0,210,240'
-      gHostCtx.beginPath()
-      gHostCtx.arc(p.tx + breathe * .1, p.ty + breathe * (p.ty/h - .5) * .2, p.r, 0, Math.PI * 2)
-      gHostCtx.fillStyle = `rgba(${color},${alpha})`
-      gHostCtx.fill()
+      const b = Math.sin(t * 1.1 + p.phase * .4) * 1.8
+      ghCtx.beginPath(); ghCtx.arc(p.tx + b*.08, p.ty + b * (p.ty/h - .5) * .15, p.r, 0, Math.PI*2)
+      ghCtx.fillStyle = `hsla(${p.hue},75%,${55 + 15*Math.sin(t*.7+p.phase)}%,${.5 + .3*Math.sin(t*.8+p.phase)})`
+      ghCtx.fill()
     })
+    // Glow overlay
+    if (currentCardGeometry) {
+      const gl = ghCtx.createRadialGradient(w/2,h/2,0,w/2,h/2,w*.35)
+      gl.addColorStop(0, `hsla(${currentCardGeometry.hue},80%,60%,.08)`)
+      gl.addColorStop(1, 'rgba(0,0,0,0)')
+      ghCtx.fillStyle = gl; ghCtx.fillRect(0,0,w,h)
+    }
     // Scan line
-    const scanY = ((t * 60) % (h + 40)) - 20
-    const scanGrad = gHostCtx.createLinearGradient(0, scanY - 20, 0, scanY + 20)
-    scanGrad.addColorStop(0, 'rgba(0,229,255,0)')
-    scanGrad.addColorStop(.5, 'rgba(0,229,255,.12)')
-    scanGrad.addColorStop(1, 'rgba(0,229,255,0)')
-    gHostCtx.fillStyle = scanGrad
-    gHostCtx.fillRect(0, scanY - 20, w, 40)
-    document.getElementById('ghost-label').textContent = 'IDENTITY VERIFIED · SCAN ACTIVE'
+    const sy = ((t * 55) % (h + 40)) - 20
+    const sg = ghCtx.createLinearGradient(0,sy-18,0,sy+18)
+    sg.addColorStop(0,'rgba(0,229,255,0)'); sg.addColorStop(.5,'rgba(0,229,255,.1)'); sg.addColorStop(1,'rgba(0,229,255,0)')
+    ghCtx.fillStyle=sg; ghCtx.fillRect(0,sy-18,w,36)
     return requestAnimationFrame(drawGhost)
   }
 
   if (ghostState === 'shattering') {
-    let anyVisible = false
+    let any = false
     ghostParticles.forEach(p => {
-      p.x += p.vx
-      p.y += p.vy
-      p.vy += .1
-      p.vx *= .99
-      p.r *= .97
-      if (p.r > .1) anyVisible = true
-      gHostCtx.beginPath()
-      gHostCtx.arc(p.x, p.y, Math.max(p.r, 0), 0, Math.PI * 2)
-      gHostCtx.fillStyle = `rgba(255,45,85,${Math.min(p.r, 1) * .8})`
-      gHostCtx.fill()
+      p.x += p.vx; p.y += p.vy; p.vy += .12; p.r *= .96
+      if (p.r > .1) any = true
+      ghCtx.beginPath(); ghCtx.arc(p.x, p.y, Math.max(p.r,0), 0, Math.PI*2)
+      ghCtx.fillStyle = `rgba(255,45,85,${Math.min(p.r,.9) * .8})`; ghCtx.fill()
     })
-    if (!anyVisible) { ghostState = 'locked'; initGhostParticles('locked'); document.getElementById('ghost-label').textContent = 'IDENTITY UNKNOWN' }
+    if (!any) {
+      ghostState = 'locked'
+      currentCardGeometry = null
+      ghostParticles = buildSilhouette(ghostCanvas.width, ghostCanvas.height, null)
+      document.getElementById('ghost-label').textContent = 'AWAITING AUTH'
+      document.getElementById('card-name-badge').style.opacity = '0'
+    }
     return requestAnimationFrame(drawGhost)
   }
 
   requestAnimationFrame(drawGhost)
 }
 
-function triggerGhostAssemble() {
+function triggerAssemble(token) {
+  currentCardGeometry = cardGeometry(token)
+  ghostParticles = buildSilhouette(ghostCanvas.width, ghostCanvas.height, currentCardGeometry)
   ghostState = 'assembling'
-  initGhostParticles('assembling')
+  if (currentCardGeometry) {
+    const badge = document.getElementById('card-name-badge')
+    const card = enrolledCards[token]
+    badge.textContent = card?.nick || token.slice(0,8).toUpperCase()
+    badge.style.opacity = '1'
+    badge.style.color = `hsl(${currentCardGeometry.hue},70%,65%)`
+    document.getElementById('ghost-label').textContent = 'IDENTITY ASSEMBLING...'
+  }
 }
-function triggerGhostShatter() {
+function triggerShatter() {
   ghostState = 'shattering'
   ghostParticles.forEach(p => {
-    const angle = Math.random() * Math.PI * 2
-    const speed = 1 + Math.random() * 4
-    p.vx = Math.cos(angle) * speed
-    p.vy = Math.sin(angle) * speed - 2
-    p.r = p.r * 3
+    const a = Math.random()*Math.PI*2, s = 1 + Math.random()*4
+    p.vx = Math.cos(a)*s; p.vy = Math.sin(a)*s - 2; p.r *= 3
   })
 }
 
-// ─────────────────── CARD DNA BARCODE ───────────────────
+// ─── CARD DNA BARCODE ─────────────────────────────────
 const dnaCanvas = document.getElementById('dna-canvas')
 const dnaCtx = dnaCanvas.getContext('2d')
 
 function renderDNA(token) {
   const w = dnaCanvas.offsetWidth || 400
-  dnaCanvas.width = w
-  dnaCanvas.height = 36
-  dnaCtx.clearRect(0, 0, w, 36)
-
-  // Hash to colors
+  dnaCanvas.width = w; dnaCanvas.height = 32
+  dnaCtx.clearRect(0,0,w,32)
   if (!token) {
-    dnaCtx.fillStyle = 'rgba(0,229,255,.05)'
-    dnaCtx.fillRect(0, 0, w, 36)
-    return
+    dnaCtx.fillStyle = 'rgba(0,229,255,.04)'; dnaCtx.fillRect(0,0,w,32); return
   }
-
-  // SHA256-like: use token bytes as color seeds
   const bytes = []
   for (let i = 0; i < token.length; i++) bytes.push(token.charCodeAt(i))
   while (bytes.length < 64) bytes.push(bytes[bytes.length % bytes.length] ^ bytes.length)
-
-  const barW = w / bytes.length
-  bytes.forEach((b, i) => {
-    const hue = (b * 5.6) % 360
-    const sat = 40 + (b % 50)
-    const lit = 25 + (b % 35)
-    const h = 4 + (b % 28)
-    const y = (36 - h) / 2
-    dnaCtx.fillStyle = `hsl(${hue},${sat}%,${lit}%)`
-    dnaCtx.fillRect(i * barW, y, Math.max(barW - .5, .5), h)
+  const bW = w / bytes.length
+  bytes.forEach((b,i) => {
+    const h = (b * 5.6) % 360, s = 40+(b%50), l = 25+(b%35), ht = 4+(b%24)
+    dnaCtx.fillStyle = `hsl(${h},${s}%,${l}%)`
+    dnaCtx.fillRect(i*bW, (32-ht)/2, Math.max(bW-.5,.5), ht)
   })
-
-  // Overlay scanline
-  const scan = dnaCtx.createLinearGradient(0, 0, 0, 36)
-  scan.addColorStop(0, 'rgba(0,229,255,.08)')
-  scan.addColorStop(.5, 'rgba(0,229,255,.02)')
-  scan.addColorStop(1, 'rgba(0,229,255,.08)')
-  dnaCtx.fillStyle = scan
-  dnaCtx.fillRect(0, 0, w, 36)
-
-  // Show hash text
+  const scan = dnaCtx.createLinearGradient(0,0,0,32)
+  scan.addColorStop(0,'rgba(0,229,255,.07)'); scan.addColorStop(.5,'rgba(0,229,255,.02)'); scan.addColorStop(1,'rgba(0,229,255,.07)')
+  dnaCtx.fillStyle=scan; dnaCtx.fillRect(0,0,w,32)
   document.getElementById('dna-hash-txt').textContent = token.slice(0,64)
   document.getElementById('dna-uid').textContent = token.slice(0,8).toUpperCase()
-
-  // Entropy: count unique byte values / 256
   const unique = new Set(bytes).size
-  const entropy = Math.round(unique / 256 * 100)
-  document.getElementById('entropy-bar').style.width = entropy + '%'
-  document.getElementById('entropy-val').textContent = entropy + '%'
+  const entropy = Math.round(unique/256*100)
+  document.getElementById('entropy-bar').style.width = entropy+'%'
+  document.getElementById('entropy-val').textContent = entropy+'%'
 }
 
-// ─────────────────── HEXDUMP STREAM ───────────────────
+// ─── CARD DRAWER ──────────────────────────────────────
+dnaCanvas.addEventListener('click', () => {
+  if (!currentToken) return
+  drawerOpen = !drawerOpen
+  const drawer = document.getElementById('card-drawer')
+  drawer.classList.toggle('open', drawerOpen)
+  if (drawerOpen) renderDrawer(currentToken)
+})
+
+function renderDrawer(token) {
+  const card = enrolledCards[token] || {}
+  const nick = card.nick || token.slice(0,8)
+  const uses = card.useCount || 0
+  const lastSeen = card.lastSeen || '—'
+  const revoked = card.revoked || false
+  const maxUses = Math.max(uses, 10)
+
+  document.getElementById('drawer-content').innerHTML = `
+    <div class="drawer-row">
+      <span class="drawer-label">NICKNAME</span>
+      <input class="nick-edit" id="nick-input" value="${nick}" placeholder="card nickname" maxlength="20">
+    </div>
+    <div class="drawer-row"><span class="drawer-label">TOKEN</span><span class="drawer-val" style="font-size:9px">${token.slice(0,16)}...</span></div>
+    <div class="drawer-row"><span class="drawer-label">USES</span><span class="drawer-val g">${uses}</span></div>
+    <div class="use-bar"><div class="use-fill" style="width:${Math.min(uses/maxUses*100,100)}%"></div></div>
+    <div class="drawer-row"><span class="drawer-label">LAST SEEN</span><span class="drawer-val a">${lastSeen}</span></div>
+    <div class="drawer-row"><span class="drawer-label">STATUS</span><span class="drawer-val ${revoked?'r':'g'}">${revoked?'REVOKED':'ACTIVE'}</span></div>
+    <button class="enroll-btn" onclick="saveNick('${token}')">💾 SAVE NICKNAME</button>
+    <button class="revoke-btn" onclick="revokeCard('${token}')">${revoked?'♻ REINSTATE':'🚫 REVOKE CARD'}</button>
+  `
+}
+
+function saveNick(token) {
+  const nick = document.getElementById('nick-input')?.value?.trim()
+  if (!nick) return
+  if (!enrolledCards[token]) enrolledCards[token] = {}
+  enrolledCards[token].nick = nick
+  renderCardsList()
+  toast(`NICKNAME SAVED: ${nick}`)
+}
+
+function revokeCard(token) {
+  if (!enrolledCards[token]) enrolledCards[token] = {}
+  enrolledCards[token].revoked = !enrolledCards[token].revoked
+  const revoked = enrolledCards[token].revoked
+  renderDrawer(token)
+  renderCardsList()
+  toast(revoked ? '🚫 CARD REVOKED' : '♻ CARD REINSTATED')
+  diagLine(revoked ? `CARD REVOKED: ${token.slice(0,8)}` : `CARD REINSTATED: ${token.slice(0,8)}`, revoked ? 'fail' : 'ok')
+}
+
+// ─── ENROLLED CARDS LIST ──────────────────────────────
+function cardIconSVG(token, size = 20) {
+  const geo = cardGeometry(token)
+  if (!geo) return ''
+  const sides = geo.sides, r = size/2 - 2, cx = size/2, cy = size/2
+  let pts = []
+  for (let i = 0; i < sides; i++) {
+    const a = (i/sides)*Math.PI*2 - Math.PI/2
+    pts.push(`${cx + r*Math.cos(a)},${cy + r*Math.sin(a)}`)
+  }
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <polygon points="${pts.join(' ')}" fill="hsla(${geo.hue},70%,50%,.3)" stroke="hsl(${geo.hue},70%,60%)" stroke-width="1"/>
+  </svg>`
+}
+
+function renderCardsList() {
+  const list = document.getElementById('cards-list')
+  const tokens = Object.keys(enrolledCards)
+  document.getElementById('card-count').textContent = tokens.length + ' CARDS'
+  if (!tokens.length) {
+    list.innerHTML = '<div style="padding:10px 14px;font-size:10px;color:var(--text2)">No enrolled cards yet.</div>'
+    return
+  }
+  list.innerHTML = tokens.map(t => {
+    const c = enrolledCards[t] || {}
+    const nick = c.nick || t.slice(0,8).toUpperCase()
+    const geo = cardGeometry(t)
+    const isActive = t === currentToken
+    const revoked = c.revoked
+    return `<div class="card-item${isActive?' active':''}" onclick="selectCard('${t}')">
+      <div class="card-icon-wrap" style="background:hsla(${geo?.hue||180},50%,30%,.2)">${cardIconSVG(t)}</div>
+      <div class="card-info">
+        <span class="card-nick">${nick}</span>
+        <span class="card-sub">${c.useCount||0} uses · ${c.lastSeen||'never'}</span>
+      </div>
+      <span class="card-status ${revoked?'rev':'ok'}">${revoked?'REV':'OK'}</span>
+    </div>`
+  }).join('')
+}
+
+function selectCard(token) {
+  currentToken = token
+  renderDNA(token)
+  drawerOpen = true
+  document.getElementById('card-drawer').classList.add('open')
+  renderDrawer(token)
+  renderCardsList()
+}
+
+// ─── HEXDUMP ──────────────────────────────────────────
 function updateHexdump(token) {
-  const bytes = token ? token.slice(0, 32) : '0000000000000000'
+  const bytes = token ? token.slice(0,32) : '0'.repeat(32)
   let hex = ''
   for (let i = 0; i < bytes.length; i += 2) {
-    const code = bytes.charCodeAt(i) ^ bytes.charCodeAt(i+1 < bytes.length ? i+1 : 0)
+    const code = bytes.charCodeAt(i) ^ (bytes.charCodeAt(i+1) || 0)
     hex += code.toString(16).padStart(2,'0') + ' '
     if ((i/2+1) % 8 === 0 && i < bytes.length-2) hex += ' '
   }
   document.getElementById('hexdump').textContent = hex.trim()
 }
-
-// Animate hexdump with noise
-function animateHexdump() {
-  const el = document.getElementById('hexdump')
+function animateHexNoise() {
   if (locked) {
     let h = ''
     for (let i = 0; i < 16; i++) {
       h += Math.floor(Math.random()*256).toString(16).padStart(2,'0') + ' '
       if (i === 7) h += ' '
     }
-    el.textContent = h.trim()
+    document.getElementById('hexdump').textContent = h.trim()
   }
-  setTimeout(animateHexdump, 200)
+  setTimeout(animateHexNoise, 200)
 }
-animateHexdump()
+animateHexNoise()
 
-// ─────────────────── SNR SCANNER ───────────────────
+// ─── SNR WAVEFORM ─────────────────────────────────────
 const snrCanvas = document.getElementById('snr-canvas')
 const snrCtx = snrCanvas.getContext('2d')
-let snrData = new Array(80).fill(0)
-let snrBaseNoise = 12
-
-function resizeSNR() {
-  snrCanvas.width = snrCanvas.offsetWidth
-  snrCanvas.height = 50
-}
+let snrData = new Array(80).fill(0), snrBase = 12
 
 function drawSNR() {
-  resizeSNR()
+  snrCanvas.width = snrCanvas.offsetWidth; snrCanvas.height = 44
   const w = snrCanvas.width, h = snrCanvas.height
-  snrCtx.clearRect(0, 0, w, h)
-
-  // Shift data
-  const noise = snrBaseNoise + Math.random() * 8 - 4
-  snrData.push(noise)
+  snrCtx.clearRect(0,0,w,h)
+  snrData.push(snrBase + Math.random()*8 - 4)
   if (snrData.length > 80) snrData.shift()
-
-  const max = 40
-  // Draw waveform
   snrCtx.beginPath()
-  snrData.forEach((v, i) => {
-    const x = (i / snrData.length) * w
-    const y = h - (v / max) * h
-    if (i === 0) snrCtx.moveTo(x, y)
-    else snrCtx.lineTo(x, y)
+  snrData.forEach((v,i) => {
+    const x=(i/snrData.length)*w, y=h-(v/40)*h
+    i===0?snrCtx.moveTo(x,y):snrCtx.lineTo(x,y)
   })
-  snrCtx.strokeStyle = snrBaseNoise > 25 ? 'rgba(0,229,255,.6)' : 'rgba(0,229,255,.3)'
-  snrCtx.lineWidth = 1
-  snrCtx.stroke()
-
-  // Fill under
-  snrCtx.lineTo(w, h)
-  snrCtx.lineTo(0, h)
-  snrCtx.closePath()
-  snrCtx.fillStyle = 'rgba(0,229,255,.04)'
-  snrCtx.fill()
-
-  // Threshold line
-  snrCtx.beginPath()
-  snrCtx.moveTo(0, h - (20/max)*h)
-  snrCtx.lineTo(w, h - (20/max)*h)
-  snrCtx.strokeStyle = 'rgba(255,183,0,.2)'
-  snrCtx.setLineDash([4,4])
-  snrCtx.lineWidth = .5
-  snrCtx.stroke()
+  snrCtx.strokeStyle=snrBase>25?'rgba(0,229,255,.7)':'rgba(0,229,255,.3)'
+  snrCtx.lineWidth=1; snrCtx.stroke()
+  const last = snrCtx.getImageData(0,0,w,h)
+  snrCtx.lineTo(w,h); snrCtx.lineTo(0,h); snrCtx.closePath()
+  snrCtx.fillStyle='rgba(0,229,255,.04)'; snrCtx.fill()
+  snrCtx.beginPath(); snrCtx.moveTo(0,h-(20/40)*h); snrCtx.lineTo(w,h-(20/40)*h)
+  snrCtx.strokeStyle='rgba(255,183,0,.2)'; snrCtx.setLineDash([4,4]); snrCtx.lineWidth=.5; snrCtx.stroke()
   snrCtx.setLineDash([])
-
-  document.getElementById('snr-val').textContent = `SNR: ${noise.toFixed(1)} dB`
-
-  setTimeout(drawSNR, 80)
+  document.getElementById('snr-val').textContent = `SNR: ${(snrBase+Math.random()*4-2).toFixed(1)} dB`
+  setTimeout(drawSNR, 90)
 }
 drawSNR()
 
-// ─────────────────── TTL RING ───────────────────
-const TTL_CIRC = 2 * Math.PI * 46 // ~289
-function updateTTLRing(secs) {
-  const frac = secs / SESSION_TTL
-  const offset = TTL_CIRC * (1 - frac)
-  const arc = document.getElementById('ttl-arc')
-  arc.setAttribute('stroke-dashoffset', offset)
-
-  const num = document.getElementById('ttl-num')
-  const lbl = document.getElementById('ttl-bar-label')
-  const radSym = document.getElementById('rad-sym')
-  num.textContent = secs
-
-  document.getElementById('ttl-stat').textContent = secs + 's'
-
-  if (secs < 60) {
-    arc.setAttribute('stroke', 'var(--r)')
-    num.className = 'rad-danger'
-    radSym.style.opacity = '.6'
-    radSym.style.animation = 'blink .8s step-end infinite'
-    lbl.textContent = 'CRITICAL — EXPIRING'
-    lbl.style.color = 'var(--r)'
-  } else if (secs < 120) {
-    arc.setAttribute('stroke', 'var(--amber)')
-    num.className = 'rad-warning'
-    radSym.style.opacity = '.4'
-    radSym.style.animation = ''
-    lbl.textContent = 'WARNING — LOW TTL'
-    lbl.style.color = 'var(--amber)'
-  } else {
-    arc.setAttribute('stroke', 'var(--g)')
-    num.className = ''
-    num.style.color = 'var(--g)'
-    radSym.style.opacity = '.2'
-    radSym.style.animation = ''
-    lbl.textContent = 'SESSION ACTIVE'
-    lbl.style.color = ''
-  }
-}
-
-// Draw tick marks on ring
-function buildTickMarks() {
+// ─── TTL RING ─────────────────────────────────────────
+const TTL_CIRC = 2 * Math.PI * 46
+;(function buildTicks() {
   const g = document.getElementById('tick-marks')
   for (let i = 0; i < 60; i++) {
-    const angle = (i / 60) * Math.PI * 2 - Math.PI / 2
-    const inner = i % 5 === 0 ? 35 : 38
-    const outer = 42
-    const x1 = 55 + inner * Math.cos(angle)
-    const y1 = 55 + inner * Math.sin(angle)
-    const x2 = 55 + outer * Math.cos(angle)
-    const y2 = 55 + outer * Math.sin(angle)
+    const a = (i/60)*Math.PI*2 - Math.PI/2
+    const inner = i%5===0?36:39, outer = 42
     const line = document.createElementNS('http://www.w3.org/2000/svg','line')
-    line.setAttribute('x1',x1); line.setAttribute('y1',y1)
-    line.setAttribute('x2',x2); line.setAttribute('y2',y2)
-    line.setAttribute('stroke', i % 5 === 0 ? 'rgba(0,229,255,.3)' : 'rgba(0,229,255,.1)')
-    line.setAttribute('stroke-width', i % 5 === 0 ? '1' : '.5')
+    line.setAttribute('x1',55+inner*Math.cos(a)); line.setAttribute('y1',55+inner*Math.sin(a))
+    line.setAttribute('x2',55+outer*Math.cos(a)); line.setAttribute('y2',55+outer*Math.sin(a))
+    line.setAttribute('stroke',i%5===0?'rgba(0,229,255,.3)':'rgba(0,229,255,.1)')
+    line.setAttribute('stroke-width',i%5===0?'1':'.5')
     g.appendChild(line)
   }
-}
-buildTickMarks()
+})()
 
-// ─────────────────── SCREEN TRANSITIONS ───────────────────
-function show(id) {
-  ['lock','dash'].forEach(s => {
-    document.getElementById(s).classList.toggle('out', s !== id)
-  })
-}
-
-function flash(type) {
-  const el = document.getElementById('flash')
-  el.className = type
-  el.style.opacity = '1'
-  setTimeout(() => { el.style.opacity = '0'; el.className = '' }, 500)
-}
-
-function lockMsg(txt, cls) {
-  const el = document.getElementById('lock-msg')
-  el.textContent = txt
-  el.className = cls || ''
-}
-
-// ─────────────────── TERMINAL ───────────────────
-function termLine(text, type='dim', terminal='terminal') {
-  const t = document.getElementById(terminal)
-  const cur = t.querySelector('.cur')?.parentElement
-  if (cur) cur.remove()
-  const s = document.createElement('span')
-  s.className = 'tl'
-  s.innerHTML = `<span class="t-p">$</span> <span class="t-${type}">${text}</span>`
-  t.appendChild(s)
-  const c = document.createElement('span')
-  c.className = 'tl'
-  c.innerHTML = `<span class="t-p">$</span> <span class="cur t-dim">█</span>`
-  t.appendChild(c)
-  t.scrollTop = t.scrollHeight
-  // Trim
-  const lines = t.querySelectorAll('.tl:not(:last-child)')
-  if (lines.length > 30) lines[0].remove()
+function updateTTL(secs) {
+  const frac = secs / SESSION_TTL
+  document.getElementById('ttl-arc').setAttribute('stroke-dashoffset', TTL_CIRC*(1-frac))
+  document.getElementById('ttl-num').textContent = secs
+  document.getElementById('ttl-stat').textContent = secs + 's'
+  const arc = document.getElementById('ttl-arc')
+  const num = document.getElementById('ttl-num')
+  const rad = document.getElementById('rad-sym')
+  const lbl = document.getElementById('ttl-bar-label')
+  if (secs < 60) {
+    arc.setAttribute('stroke','var(--r)'); num.className='rad-danger'
+    rad.style.opacity='.6'; lbl.textContent='CRITICAL'; lbl.style.color='var(--r)'
+  } else if (secs < 120) {
+    arc.setAttribute('stroke','var(--amber)'); num.className='rad-warning'
+    rad.style.opacity='.35'; lbl.textContent='LOW TTL'; lbl.style.color='var(--amber)'
+  } else {
+    arc.setAttribute('stroke','var(--g)'); num.className=''
+    num.style.color='var(--g)'; rad.style.opacity='.18'
+    lbl.textContent='SESSION ACTIVE'; lbl.style.color=''
+  }
 }
 
-function diagLine(text, type='dim') {
-  termLine(text, type, 'diag-terminal')
-}
-
-// ─────────────────── SESSION ───────────────────
+// ─── SESSION ──────────────────────────────────────────
 function startTTL() {
   sessionExpiry = Date.now() + SESSION_TTL * 1000
   if (ttlInterval) clearInterval(ttlInterval)
   ttlInterval = setInterval(() => {
     const secs = Math.max(0, Math.round((sessionExpiry - Date.now()) / 1000))
-    updateTTLRing(secs)
-    if (secs === 0) doLock()
+    updateTTL(secs)
+    if (secs === 0) onSessionExpire()
   }, 1000)
-  updateTTLRing(SESSION_TTL)
+  updateTTL(SESSION_TTL)
 }
 
+async function onSessionExpire() {
+  // Log to Supabase
+  try {
+    await sb.from('auth_events').insert({ event: 'SESSION_TIMEOUT', token: currentToken })
+  } catch(e) {}
+  // Fire webhook if configured
+  if (WEBHOOK_URL) {
+    fetch(WEBHOOK_URL, { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ event:'SESSION_TIMEOUT', token: currentToken, ts: new Date().toISOString() })
+    }).catch(()=>{})
+  }
+  doLock()
+}
+
+// ─── SCREENS ──────────────────────────────────────────
+function show(id) {
+  ['lock','dash'].forEach(s => document.getElementById(s).classList.toggle('out', s!==id))
+}
+function flash(type) {
+  const el = document.getElementById('flash')
+  el.className=type; el.style.opacity='1'
+  setTimeout(()=>{ el.style.opacity='0'; el.className='' },500)
+}
+function lockMsg(txt, cls) {
+  const el = document.getElementById('lock-msg')
+  el.textContent=txt; el.className=cls||''
+}
+
+// ─── TERMINAL ─────────────────────────────────────────
+function termLine(text, type='dim', tid='terminal') {
+  const t = document.getElementById(tid)
+  const cur = t.querySelector('.cur')?.parentElement; if(cur) cur.remove()
+  const s = document.createElement('span'); s.className='tl'
+  s.innerHTML=`<span class="t-p">$</span> <span class="t-${type}">${text}</span>`
+  t.appendChild(s)
+  const c = document.createElement('span'); c.className='tl'
+  c.innerHTML=`<span class="t-p">$</span> <span class="cur t-dim">█</span>`
+  t.appendChild(c); t.scrollTop=t.scrollHeight
+  const lines = t.querySelectorAll('.tl:not(:last-child)')
+  if (lines.length > 35) lines[0].remove()
+}
+function diagLine(text, type='dim') { termLine(text, type, 'diag-terminal') }
+
+// ─── LOCK / UNLOCK ────────────────────────────────────
 function doLock() {
-  locked = true
-  if (ttlInterval) { clearInterval(ttlInterval); ttlInterval = null }
-  show('lock')
-  lockMsg('SESSION EXPIRED', 'fail')
-  termLine('SESSION EXPIRED — system locked', 'fail')
-  diagLine('AUTH SESSION TERMINATED', 'fail')
-  triggerGhostShatter()
-  snrBaseNoise = 8
-  renderDNA(null)
+  locked=true
+  if(ttlInterval){clearInterval(ttlInterval);ttlInterval=null}
+  show('lock'); lockMsg('SESSION EXPIRED','fail')
+  termLine('SESSION EXPIRED — system locked','fail')
+  diagLine('AUTH SESSION TERMINATED','fail')
+  triggerShatter(); snrBase=8; renderDNA(null)
+  drawerOpen=false; document.getElementById('card-drawer').classList.remove('open')
 }
 
 function unlock(event) {
-  locked = false
-  flash('ok')
-  lockMsg('AUTH:OK — UNLOCKING...', 'ok')
-  triggerGhostAssemble()
-  snrBaseNoise = 30
-  setTimeout(() => {
-    show('dash')
-    startTTL()
+  locked=false; flash('ok'); lockMsg('AUTH:OK — UNLOCKING...','ok')
+  const token = event.token || event.uid || 'unknown'
+  currentToken = token
+  triggerAssemble(token)
+  snrBase=30
+  setTimeout(async () => {
+    show('dash'); startTTL()
     const t = event.created_at?.slice(11,19) || new Date().toTimeString().slice(0,8)
-    document.getElementById('last-auth').textContent = t
-    termLine('AUTH:OK — session created · TTL 300s', 'ok')
-    diagLine('BIOMETRIC GHOST · ASSEMBLING', 'ok')
-    diagLine('CARD DNA · RENDERING', 'ok')
-    renderDNA(event.token || event.uid || 'deadbeef00112233')
-    updateHexdump(event.token || event.uid || 'deadbeef')
-    addGlobePing()
+    document.getElementById('active-card').textContent =
+      enrolledCards[token]?.nick || token.slice(0,8).toUpperCase()
+    termLine(`AUTH:OK · ${token.slice(0,8).toUpperCase()} · TTL 300s`,'ok')
+    diagLine('GHOST ASSEMBLING · CARD DNA RENDERING','ok')
+    renderDNA(token)
+    updateHexdump(token)
+
+    // GeoIP ping
+    const geo = await fetchGeoIP()
+    if (readerLat !== null) {
+      addGlobePing(readerLat, readerLon, readerCity, 'ok')
+    } else {
+      addGlobePing(geo.lat, geo.lon, geo.city, 'ok')
+    }
+
     loadLogs()
-    // Boost SNR temporarily
-    setTimeout(() => { snrBaseNoise = 22 }, 2000)
+    loadEnrolled()
+    setTimeout(() => { snrBase=22 }, 2500)
   }, 700)
 }
 
-// ─────────────────── LOG ───────────────────
+// ─── LOG ──────────────────────────────────────────────
 function addLogItem(e) {
-  const isOk = e.event === 'AUTH_OK'
-  const isEnroll = e.event === 'ENROLL_OK'
-  const dot = isEnroll ? 'enroll' : isOk ? 'ok' : 'fail'
-  const meta = (isOk || isEnroll) ? (e.token||'').slice(0,12)+'...' : (e.uid||'?')
-  const div = document.createElement('div')
-  div.className = 'log-item'
-  div.innerHTML = `
-    <div class="log-dot ${dot}"></div>
-    <span class="log-time">${(e.created_at||'').slice(11,19)||'--:--:--'}</span>
-    <span class="log-ev">${e.event}</span>
-    <span class="log-meta">${meta}</span>`
-  const list = document.getElementById('log-list')
-  list.insertBefore(div, list.firstChild)
+  const isOk=e.event==='AUTH_OK', isEnroll=e.event==='ENROLL_OK'
+  const dot=isEnroll?'enroll':isOk?'ok':'fail'
+  const meta=(isOk||isEnroll)?(e.token||'').slice(0,10)+'...':(e.uid||'?')
+  const div=document.createElement('div')
+  div.style.cssText='display:grid;grid-template-columns:5px 68px 1fr auto;align-items:center;gap:8px;padding:6px 12px;border-bottom:1px solid rgba(0,229,255,.05);font-size:10px'
+  div.innerHTML=`<div style="width:4px;height:4px;border-radius:50%;background:${isEnroll?'var(--amber)':isOk?'var(--g)':'var(--r)'}"></div>
+    <span style="color:var(--text2);font-size:9px">${(e.created_at||'').slice(11,19)||'--:--:--'}</span>
+    <span style="color:var(--text)">${e.event}</span>
+    <span style="color:var(--text2);font-size:9px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px">${meta}</span>`
+  const list=document.getElementById('log-list')
+  list.insertBefore(div,list.firstChild)
 }
 
 async function loadLogs() {
-  const { data, error } = await sb.from('auth_events').select('*').order('created_at',{ascending:false}).limit(40)
-  if (error || !data) return
-  document.getElementById('log-list').innerHTML = ''
-  let okC = 0, failC = 0
+  const {data,error}=await sb.from('auth_events').select('*').order('created_at',{ascending:false}).limit(40)
+  if(error||!data) return
+  document.getElementById('log-list').innerHTML=''
+  let ok=0,fail=0
   data.forEach(e => {
-    if (e.event==='AUTH_OK') okC++
-    else if (e.event?.startsWith('AUTH_FAIL')) failC++
+    if(e.event==='AUTH_OK') ok++
+    else if(e.event?.startsWith('AUTH_FAIL')) fail++
     addLogItem(e)
   })
-  document.getElementById('ev-total').textContent = data.length
-  document.getElementById('ok-count').textContent = `${okC} OK · ${failC} FAIL`
+  document.getElementById('ev-total').textContent=data.length
+  document.getElementById('ok-count').textContent=`${ok} OK · ${fail} FAIL`
 }
 
-// ─────────────────── SUPABASE REALTIME ───────────────────
-const channel = sb.channel('auth_events_feed')
-  .on('postgres_changes', { event:'INSERT', schema:'public', table:'auth_events' }, payload => {
-    const e = payload.new
-    const token = e.token || ''
-    const hexShort = token.slice(0,8) || e.uid || '??'
+async function loadEnrolled() {
+  const {data,error}=await sb.from('enrolled_tokens').select('*').order('created_at',{ascending:false})
+  if(error||!data) return
+  data.forEach(row => {
+    if(!enrolledCards[row.token]) enrolledCards[row.token]={}
+    enrolledCards[row.token].enrolledAt=row.created_at?.slice(0,10)
+  })
+  // Merge use counts from auth_events
+  const {data:evs}=await sb.from('auth_events').select('token,created_at').eq('event','AUTH_OK')
+  if(evs) {
+    evs.forEach(ev => {
+      if(!enrolledCards[ev.token]) enrolledCards[ev.token]={}
+      enrolledCards[ev.token].useCount=(enrolledCards[ev.token].useCount||0)+1
+      enrolledCards[ev.token].lastSeen=ev.created_at?.slice(0,10)||'—'
+    })
+  }
+  renderCardsList()
+}
 
-    termLine(`${e.event}: ${hexShort.toUpperCase()} · ${new Date().toTimeString().slice(0,8)}`,
-      e.event==='AUTH_OK' ? 'ok' : e.event==='ENROLL_OK' ? 'enroll' : 'fail')
-
-    // Hexdump update
+// ─── SUPABASE REALTIME ────────────────────────────────
+sb.channel('auth_events_feed')
+  .on('postgres_changes',{event:'INSERT',schema:'public',table:'auth_events'}, payload => {
+    const e = payload.new, token = e.token||''
+    termLine(`${e.event}: ${token.slice(0,8)||e.uid||'??'} · ${new Date().toTimeString().slice(0,8)}`,
+      e.event==='AUTH_OK'?'ok':e.event==='ENROLL_OK'?'enroll':'fail')
     updateHexdump(token)
 
-    if (e.event === 'AUTH_OK') {
-      snrBaseNoise = 32
-      if (locked) {
-        unlock(e)
-      } else {
-        startTTL()
-        renderDNA(token)
-        addGlobePing()
-        loadLogs()
-        diagLine('RE-AUTH · TTL REFRESHED', 'ok')
+    if (e.event==='AUTH_OK') {
+      snrBase=32
+      // Update card stats
+      if(!enrolledCards[token]) enrolledCards[token]={}
+      enrolledCards[token].useCount=(enrolledCards[token].useCount||0)+1
+      enrolledCards[token].lastSeen=new Date().toISOString().slice(0,10)
+
+      if(locked) { unlock(e) }
+      else {
+        currentToken=token
+        startTTL(); renderDNA(token); updateHexdump(token)
+        document.getElementById('active-card').textContent=enrolledCards[token]?.nick||token.slice(0,8).toUpperCase()
+        triggerAssemble(token)
+        const geo = readerLat!==null?{lat:readerLat,lon:readerLon,city:readerCity}:{lat:10.99,lon:76.96,city:'COIMBATORE'}
+        addGlobePing(geo.lat,geo.lon,geo.city,'ok')
+        loadLogs(); renderCardsList()
+        diagLine('RE-AUTH · TTL REFRESHED','ok')
       }
-    } else if (e.event === 'ENROLL_OK') {
-      lockMsg('CARD ENROLLED', 'enroll')
-      renderDNA(token)
-      addGlobePing()
-      loadLogs()
-      diagLine('ENROLL_OK · CARD FINGERPRINTED', 'enroll')
-    } else if (e.event === 'AUTH_FAIL') {
-      flash('fail')
-      lockMsg('ACCESS DENIED', 'fail')
-      snrBaseNoise = 6
-      setTimeout(() => lockMsg(''), 3000)
-      addGlobePing()
-      diagLine('AUTH_FAIL · THREAT LOGGED', 'fail')
+    } else if(e.event==='ENROLL_OK') {
+      lockMsg('CARD ENROLLED','enroll')
+      if(!enrolledCards[token]) enrolledCards[token]={useCount:0}
+      renderDNA(token); loadLogs(); loadEnrolled()
+      diagLine(`ENROLL_OK · ${token.slice(0,8)} · CARD FINGERPRINTED`,'enroll')
+      const geo=readerLat!==null?{lat:readerLat,lon:readerLon,city:readerCity}:{lat:10.99,lon:76.96,city:'COIMBATORE'}
+      addGlobePing(geo.lat,geo.lon,geo.city,'ok')
+    } else if(e.event==='AUTH_FAIL') {
+      flash('fail'); lockMsg('ACCESS DENIED','fail')
+      snrBase=5; setTimeout(()=>lockMsg(''),3000)
+      const geo=readerLat!==null?{lat:readerLat,lon:readerLon,city:readerCity}:{lat:10.99,lon:76.96,city:'COIMBATORE'}
+      addGlobePing(geo.lat,geo.lon,geo.city,'fail')
+      diagLine(`AUTH_FAIL · THREAT LOGGED`,'fail')
     }
   })
   .subscribe(status => {
-    const pulse = document.getElementById('conn-pulse')
-    const tb = document.getElementById('tb-status')
-    if (status === 'SUBSCRIBED') {
-      pulse.classList.remove('off')
-      tb.textContent = 'REALTIME CONNECTED'
-      termLine('supabase realtime · connected', 'ok')
-      diagLine('SUPABASE · SUBSCRIBED · LIVE', 'ok')
-    } else {
-      pulse.classList.add('off')
-      tb.textContent = 'CONNECTING...'
-    }
+    const pulse=document.getElementById('conn-pulse'), tb=document.getElementById('tb-status')
+    if(status==='SUBSCRIBED'){
+      pulse.classList.remove('off'); tb.textContent='REALTIME CONNECTED'
+      termLine('supabase realtime · connected','ok')
+      diagLine('SUPABASE · SUBSCRIBED · LIVE','ok')
+    } else { pulse.classList.add('off'); tb.textContent='CONNECTING...' }
   })
 
-// ─────────────────── INIT ───────────────────
+// ─── INIT ─────────────────────────────────────────────
 window.addEventListener('load', () => {
   setTimeout(() => {
-    buildGlobe()
-    drawGlobe()
-    scheduleRandomPing()
-    resizeGhost()
-    initGhostParticles('locked')
-    drawGhost()
+    buildGlobe(); drawGlobe()
+    resizeGhost(); drawGhost()
     renderDNA(null)
-  }, 100)
+    initGeoIP()
+  }, 120)
 })
-
-window.addEventListener('resize', () => {
-  buildGlobe()
-  resizeGhost()
-})
+window.addEventListener('resize', () => { buildGlobe(); resizeGhost() })
 </script>
 </body>
 </html>
