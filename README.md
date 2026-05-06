@@ -391,8 +391,8 @@ nfc-vault/
 
 ## Built By
 
-**Padmesh** — Embedded systems & security student  
-Coimbatore, India · 2025
+**P. S. Padmesh** — Cyber Security Analyst and Software Engineer  
+Coimbatore, India · 2026
 
 > *Still a student. Still building. But this one made me genuinely rethink why we're so comfortable with how broken passwords already are.*
 
